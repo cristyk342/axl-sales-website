@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Serve purchase page
+app.get('/purchase435678956', (req, res) => {
+    res.sendFile(path.join(__dirname, 'purchase435678956.html'));
+});
+
 // Handle email saving
 app.post('/save-email', (req, res) => {
     const { email } = req.body;
