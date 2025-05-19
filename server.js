@@ -5,6 +5,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname))); // Serve all static files from root
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -16,7 +17,13 @@ app.get('/', (req, res) => {
 
 // Serve purchase page
 app.get('/purchase435678956', (req, res) => {
-    res.sendFile(path.join(__dirname, 'purchase435678956.html'));
+    const filePath = path.join(__dirname, 'purchase435678956.html');
+    // Check if file exists
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send('Page not found');
+    }
 });
 
 // Handle email saving
@@ -38,6 +45,12 @@ app.post('/save-email', (req, res) => {
             res.json({ message: 'Email saved successfully' });
         }
     );
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
 });
 
 const PORT = process.env.PORT || 3001;
