@@ -159,27 +159,22 @@
                     <h3>Free</h3>
                     <div class="price">$0</div>
                     <ul class="pricing-features">
-                        <li>15 free analytic credits per month<br><span class="feature-detail">Enjoy 15 free analytic credits monthly—purchase 30 extra credits for $5.99 anytime. Analyze 10-20 videos per search (AI-optimized for efficiency). This free tier is ad-supported.</span></li>
+                        <li>15 free analytic credits per month<br><span class="feature-detail">Enjoy 15 free analytic credits monthly. Analyze 10-20 videos per search (AI-optimized for efficiency). This free tier is ad-supported.</span></li>
                         <li>Basic growth insights<br><span class="feature-detail">Spot early warning signs before your growth slows down.</span></li>
                         <li>Content performance snapshots<br><span class="feature-detail">See which posts are connecting — and why.</span></li>
                         <li>Smart hashtag suggestions<br><span class="feature-detail">Save time picking hashtags that actually fit your content.</span></li>
                     </ul>
                 </div>
-                <div class="pricing-column">
-                    <h3>Premium Tier 1</h3>
-                    <div class="price">$15<span>/month</span></div>
-                    <div class="promo-banner">Special Launch Pricing: $15/month (regularly $25/month)</div>
+                <div class="pricing-column featured">
+                    <div class="best-value">BEST VALUE</div>
+                    <h3>Premium</h3>
+                    <div class="price">$250<span>/month</span></div>
+                    <div class="tier-subtitle">For serious creators ready to scale fast</div>
                     <div class="offer-details">
-                        <p>Special pricing available only until June 30th. Lock in your rate now!</p>
-                        <div class="countdown-timer">
-                            <p>Price only for the next: <span id="countdown">7d 00h 00m 00s</span></p>
-                        </div>
-                        <p class="spots-left">Only <span id="spots-counter">74</span> spots left at this price</p>
-                        <button class="weekly-plan-btn">👉 Lock in Launch Price – Limited Time</button>
                         <div id="paypal-button-container-P-79E14141L54422445NAJ32DI" style="margin-top: 15px;"></div>
                     </div>
                     <ul class="pricing-features">
-                        <li>60 analytic credits per month<br><span class="feature-detail">Gain deeper insights with 60 analytic credits monthly (purchase 30 extra credits for $5.99 anytime). Analyze up to 20 videos per search. No ads, just insights.</span></li>
+                        <li>100 analytic credits per month<br><span class="feature-detail">Unlock full potential with 100 analytic credits monthly. Analyze up to 40 videos and comments per search. Our best plan for serious creators.</span></li>
                         <li>1 TikTok account analyzed in depth<br><span class="feature-detail">Get a complete emotional and performance profile of your account.</span></li>
                         <li>Full emotional and growth analytics<br><span class="feature-detail">Finally understand what's actually working (or not).</span></li>
                         <li>In-depth hashtag workflow planning<br><span class="feature-detail">Use smarter hashtags with real strategy — not guesswork.</span></li>
@@ -187,23 +182,14 @@
                         <li>Weekly performance insights delivered<br><span class="feature-detail">Stay motivated with fresh, actionable insights every week.</span></li>
                         <li>Competitor Analysis (Coming Soon)<br><span class="feature-detail">Track and analyze your competitors' performance and strategies.</span></li>
                     </ul>
-                </div>
-                <div class="pricing-column featured">
-                    <div class="best-value">BEST VALUE</div>
-                    <h3>Premium Tier 2</h3>
-                    <div class="price">$39<span>/month</span></div>
-                    <div class="tier-subtitle">For serious creators ready to scale fast</div>
-                    <ul class="pricing-features">
-                        <li>100 analytic credits per month<br><span class="feature-detail">Unlock full potential with 100 analytic credits monthly (purchase 30 extra credits for $5.99 anytime). Analyze up to 40 videos and comments per search. Our best plan for serious creators.</span></li>
-                        <li>Analyze up to 3 TikTok accounts<br><span class="feature-detail">Perfect if you manage multiple pages, brands, or clients.</span></li>
-                        <li>UGC and agency-friendly tools<br><span class="feature-detail">Track multiple campaigns or creators easily.</span></li>
-                        <li>Download CSVs or export insights (coming soon)<br><span class="feature-detail">Take your data with you for deeper analysis.</span></li>
-                        <li>Full emotional sentiment + performance analytics<br><span class="feature-detail">Pinpoint exactly what fans love (or hate) across different audiences.</span></li>
-                        <li>Smart hashtag and posting time optimization (coming soon)<br><span class="feature-detail">Post at the right moment to get seen faster.</span></li>
-                        <li>Advanced Competitor Analysis (Coming Soon)<br><span class="feature-detail">Deep dive into competitor strategies with multi-account tracking and comparison tools.</span></li>
-                    </ul>
-                    <p style="margin-top: 15px; font-weight: bold;">Includes a 3-day free trial!</p>
-                    <div id="paypal-button-container-P-3VS17480L01941356NAJ36LY" style="margin-top: 10px;"></div> 
+                    <div class="addon-section">
+                        <h4>Add-On Credits</h4>
+                        <ul class="addon-list">
+                            <li>+50 credits for $100</li>
+                            <li>+100 credits for $175</li>
+                            <li>+200 credits for $300</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -259,7 +245,7 @@
     <!-- PayPal Button Scripts -->
     <script src="https://www.paypal.com/sdk/js?client-id=AY8jPIYw88_LnlvyIMur29C2ZMaSIIm00RFhXn5sVW_H3sHmZwGjnt1wJZF10bWFJl7IQi3zqoC0gpdH&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
     <script>
-      // Tier 1 Button
+      // Premium Tier Button
       paypal.Buttons({
           style: {
               shape: 'rect',
@@ -274,28 +260,9 @@
             });
           },
           onApprove: function(data, actions) {
-            alert('Tier 1 Subscription Success! ID: ' + data.subscriptionID); // Optional success message
+            alert('Premium Subscription Success! ID: ' + data.subscriptionID); // Optional success message
           }
       }).render('#paypal-button-container-P-79E14141L54422445NAJ32DI');
-
-      // Tier 2 Button
-      paypal.Buttons({
-          style: {
-              shape: 'rect',
-              color: 'gold',
-              layout: 'vertical',
-              label: 'subscribe'
-          },
-          createSubscription: function(data, actions) {
-            return actions.subscription.create({
-              /* Creates the subscription */
-              plan_id: 'P-3VS17480L01941356NAJ36LY'
-            });
-          },
-          onApprove: function(data, actions) {
-            alert('Tier 2 Subscription Success! ID: ' + data.subscriptionID); // Optional success message
-          }
-      }).render('#paypal-button-container-P-3VS17480L01941356NAJ36LY');
     </script>
 
     <script src="/scripts/main.js"></script>
