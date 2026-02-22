@@ -1,4 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Hero copy variants
+    const heroCopy = {
+        local: {
+            badge: 'Customer Discovery Platform',
+            headline: 'Your Next Customer Is Already Looking for You.',
+            subheadline: 'People are publicly asking for the services you offer. We find those requests and send them to you every day as ready-to-contact customers.',
+            cta: 'Find My Customers'
+        },
+        b2b: {
+            badge: 'Lead Intelligence Platform',
+            headline: 'Your Next Client Is Already Looking for You.',
+            subheadline: 'Businesses are publicly asking for the services you offer. We find those requests and send them to you every day as ready-to-contact leads.',
+            cta: 'Start My Lead Search'
+        }
+    };
+
+    function updateHeroCopy(isB2B) {
+        const copy = isB2B ? heroCopy.b2b : heroCopy.local;
+        const badge = document.querySelector('[data-hero-badge]');
+        const headline = document.querySelector('[data-hero-headline]');
+        const subheadline = document.querySelector('[data-hero-subheadline]');
+        const cta = document.querySelector('[data-hero-cta]');
+
+        if (badge) badge.textContent = copy.badge;
+        if (headline) headline.textContent = copy.headline;
+        if (subheadline) subheadline.textContent = copy.subheadline;
+        if (cta) cta.textContent = copy.cta;
+    }
+
+    // Carousel functionality (click only, no auto-rotate)
+    function initCarousels() {
+        const carousels = document.querySelectorAll('.carousel');
+
+        carousels.forEach(carousel => {
+            const tabs = carousel.querySelectorAll('.carousel-tab');
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const isHeroCarousel = carousel.dataset.carousel === 'hero';
+
+            function showSlide(index) {
+                // Update slides
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                // Update tabs
+                tabs.forEach((tab, i) => {
+                    tab.classList.toggle('active', i === index);
+                });
+
+                // Update hero copy if this is the hero carousel
+                if (isHeroCarousel) {
+                    updateHeroCopy(index === 1); // index 1 = B2B
+                }
+            }
+
+            // Tab click handlers
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+        });
+    }
+
+    initCarousels();
+
     // Countdown Timer
     function updateCountdown() {
         const countdownElement = document.getElementById('countdown');

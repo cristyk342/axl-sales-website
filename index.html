@@ -23,8 +23,8 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
+                <li><a href="#consultant">Your Strategist</a></li>
                 <li><a href="#comparison">Why AXL</a></li>
-                <li><a href="#platform-roadmap">Platforms</a></li>
                 <li><a href="#cta" class="cta-button nav-cta">Get Started</a></li>
             </ul>
         </div>
@@ -34,61 +34,126 @@
     <section class="hero">
         <div class="container hero-split">
             <div class="hero-content">
-                <div class="hero-badge">Lead Intelligence Platform</div>
-                <h1>Your Next Buyer Is Already Looking for You.</h1>
-                <p class="subheadline">People are publicly asking for the services you offer. We find those requests and send them to you every day as ready-to-contact leads.</p>
-                <p class="hero-accent">No ads. No guessing. Just opportunities.</p>
+                <div class="hero-managed-tag"><i class="fas fa-user-check"></i> Managed by a real strategist</div>
+                <div class="hero-badge" data-hero-badge>Customer Discovery Platform</div>
+                <h1 data-hero-headline>Your Next Customer Is Already Looking for You.</h1>
+                <p class="subheadline" data-hero-subheadline>People are publicly asking for the services you offer. We find those requests and send them to you every day as ready-to-contact customers.</p>
+                <p class="hero-accent">Skip the cold pitch. Show up where they&rsquo;re already asking.</p>
                 <div class="hero-actions">
-                    <a href="#cta" class="cta-button primary-btn">Start My Lead Search</a>
+                    <a href="#cta" class="cta-button primary-btn" data-hero-cta>Find My Customers</a>
                 </div>
             </div>
             <div class="hero-mockup">
-                <div class="app-window">
-                    <div class="app-titlebar">
-                        <div class="app-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                        </div>
-                        <span class="app-title">AXL Sales Dashboard</span>
+                <div class="carousel" data-carousel="hero">
+                    <div class="carousel-tabs">
+                        <button class="carousel-tab active" data-slide="0">Local Services</button>
+                        <button class="carousel-tab" data-slide="1">B2B &amp; Agencies</button>
                     </div>
-                    <div class="app-body">
-                        <div class="app-sidebar">
-                            <div class="sidebar-item active"><i class="fas fa-fire"></i> Leads</div>
-                            <div class="sidebar-item"><i class="fas fa-chart-line"></i> Analytics</div>
-                            <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                    <div class="carousel-slides">
+                        <!-- Slide 1: Local Services (B2C) -->
+                        <div class="carousel-slide active">
+                            <div class="app-window">
+                                <div class="app-titlebar">
+                                    <div class="app-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="app-title">AXL Sales Dashboard</span>
+                                </div>
+                                <div class="app-body">
+                                    <div class="app-sidebar">
+                                        <div class="sidebar-item active"><i class="fas fa-fire"></i> Customers</div>
+                                        <div class="sidebar-item"><i class="fas fa-chart-line"></i> Analytics</div>
+                                        <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                                    </div>
+                                    <div class="app-main">
+                                        <div class="app-header-bar">
+                                            <span class="app-header-title">Today&rsquo;s Customers</span>
+                                            <span class="lead-count">12 new</span>
+                                        </div>
+                                        <div class="lead-item hot">
+                                            <div class="lead-warmth-badge hot">HOT</div>
+                                            <div class="lead-details">
+                                                <div class="lead-user">@maria_jones</div>
+                                                <div class="lead-comment">&ldquo;Anyone know a good hair stylist in Atlanta? Need a balayage&rdquo;</div>
+                                                <div class="lead-meta"><i class="fab fa-tiktok"></i> 2 min ago</div>
+                                            </div>
+                                            <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                        <div class="lead-item warm">
+                                            <div class="lead-warmth-badge warm">WARM</div>
+                                            <div class="lead-details">
+                                                <div class="lead-user">@smallbiz_owner</div>
+                                                <div class="lead-comment">&ldquo;Looking for someone to manage our social media&rdquo;</div>
+                                                <div class="lead-meta"><i class="fab fa-tiktok"></i> 15 min ago</div>
+                                            </div>
+                                            <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                        <div class="lead-item warm">
+                                            <div class="lead-warmth-badge warm">WARM</div>
+                                            <div class="lead-details">
+                                                <div class="lead-user">@homeowner_dave</div>
+                                                <div class="lead-comment">&ldquo;Who do you recommend for HVAC in the Austin area?&rdquo;</div>
+                                                <div class="lead-meta"><i class="fab fa-tiktok"></i> 1 hr ago</div>
+                                            </div>
+                                            <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="app-main">
-                            <div class="app-header-bar">
-                                <span class="app-header-title">Today&rsquo;s Leads</span>
-                                <span class="lead-count">12 new</span>
-                            </div>
-                            <div class="lead-item hot">
-                                <div class="lead-warmth-badge hot">HOT</div>
-                                <div class="lead-details">
-                                    <div class="lead-user">@maria_jones</div>
-                                    <div class="lead-comment">&ldquo;Who do you recommend for HVAC in the Atlanta area?&rdquo;</div>
-                                    <div class="lead-meta"><i class="fab fa-tiktok"></i> 2 min ago</div>
+                        <!-- Slide 2: B2B & Agencies -->
+                        <div class="carousel-slide">
+                            <div class="app-window">
+                                <div class="app-titlebar">
+                                    <div class="app-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot yellow"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                    <span class="app-title">AXL Sales Dashboard</span>
                                 </div>
-                                <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div class="lead-item warm">
-                                <div class="lead-warmth-badge warm">WARM</div>
-                                <div class="lead-details">
-                                    <div class="lead-user">@dave_builder</div>
-                                    <div class="lead-comment">&ldquo;What does this usually cost for a 3-bedroom?&rdquo;</div>
-                                    <div class="lead-meta"><i class="fab fa-tiktok"></i> 15 min ago</div>
+                                <div class="app-body">
+                                    <div class="app-sidebar">
+                                        <div class="sidebar-item active"><i class="fas fa-fire"></i> Leads</div>
+                                        <div class="sidebar-item"><i class="fas fa-chart-line"></i> Analytics</div>
+                                        <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+                                    </div>
+                                    <div class="app-main">
+                                        <div class="app-header-bar">
+                                            <span class="app-header-title">Today&rsquo;s Leads</span>
+                                            <span class="lead-count">8 new</span>
+                                        </div>
+                                        <div class="lead-item hot">
+                                            <div class="lead-warmth-badge hot">HOT</div>
+                                            <div class="lead-details">
+                                                <div class="lead-user">@healthtech_ceo</div>
+                                                <div class="lead-comment">&ldquo;Looking for a dev agency to build our patient portal&rdquo;</div>
+                                                <div class="lead-meta"><i class="fab fa-tiktok"></i> 5 min ago</div>
+                                            </div>
+                                            <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                        <div class="lead-item hot">
+                                            <div class="lead-warmth-badge hot">HOT</div>
+                                            <div class="lead-details">
+                                                <div class="lead-user">@ai_startup</div>
+                                                <div class="lead-comment">&ldquo;Anyone know a good web agency for our SaaS landing page?&rdquo;</div>
+                                                <div class="lead-meta"><i class="fab fa-tiktok"></i> 12 min ago</div>
+                                            </div>
+                                            <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                        <div class="lead-item warm">
+                                            <div class="lead-warmth-badge warm">WARM</div>
+                                            <div class="lead-details">
+                                                <div class="lead-user">@series_a_founder</div>
+                                                <div class="lead-comment">&ldquo;Need a marketing agency for our product launch&rdquo;</div>
+                                                <div class="lead-meta"><i class="fab fa-tiktok"></i> 45 min ago</div>
+                                            </div>
+                                            <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
-                            </div>
-                            <div class="lead-item warm">
-                                <div class="lead-warmth-badge warm">WARM</div>
-                                <div class="lead-details">
-                                    <div class="lead-user">@sarah_m</div>
-                                    <div class="lead-comment">&ldquo;Anyone have experience with this in Denver?&rdquo;</div>
-                                    <div class="lead-meta"><i class="fab fa-tiktok"></i> 1 hr ago</div>
-                                </div>
-                                <button class="lead-action">Connect <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -111,46 +176,100 @@
                 <div class="feature-text">
                     <div class="feature-label">01</div>
                     <h3>Intent Alerts</h3>
-                    <p>We detect comments that signal real buying intent. When someone asks &ldquo;Do you serve my area?&rdquo; or &ldquo;Who do you recommend?&rdquo; &mdash; AXL Sales flags that comment and delivers it to you as a lead.</p>
+                    <p>We detect comments that signal real buying intent. When someone comments &ldquo;Can you do my hair Friday?&rdquo; on a stylist&rsquo;s video and that stylist never replies, AXL Sales catches it and delivers it to you as a ready-to-book lead.</p>
                     <p class="feature-highlight">Stop waiting for customers to find you. We find them first.</p>
                 </div>
                 <div class="feature-mockup">
-                    <div class="app-window mockup-sm">
-                        <div class="app-titlebar">
-                            <div class="app-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <span class="app-title">Intent Detection</span>
+                    <div class="carousel" data-carousel="intent">
+                        <div class="carousel-tabs">
+                            <button class="carousel-tab active" data-slide="0">Local Services</button>
+                            <button class="carousel-tab" data-slide="1">B2B &amp; Agencies</button>
                         </div>
-                        <div class="mockup-body">
-                            <div class="intent-card">
-                                <div class="intent-header">
-                                    <i class="fas fa-bolt intent-icon"></i>
-                                    <span>Intent Detected</span>
-                                </div>
-                                <div class="intent-source">
-                                    <span class="source-avatar">MJ</span>
-                                    <div>
-                                        <div class="source-name">@maria_jones</div>
-                                        <div class="source-context">Commented on @atlhomeservices</div>
+                        <div class="carousel-slides">
+                            <!-- Slide 1: Local Services -->
+                            <div class="carousel-slide active">
+                                <div class="app-window mockup-sm">
+                                    <div class="app-titlebar">
+                                        <div class="app-dots">
+                                            <span class="dot red"></span>
+                                            <span class="dot yellow"></span>
+                                            <span class="dot green"></span>
+                                        </div>
+                                        <span class="app-title">Intent Detection</span>
+                                    </div>
+                                    <div class="mockup-body">
+                                        <div class="intent-card">
+                                            <div class="intent-header">
+                                                <i class="fas fa-bolt intent-icon"></i>
+                                                <span>Intent Detected</span>
+                                            </div>
+                                            <div class="intent-source">
+                                                <span class="source-avatar">BT</span>
+                                                <div>
+                                                    <div class="source-name">@brittany_tx</div>
+                                                    <div class="source-context">Commented on @hairtok · no reply</div>
+                                                </div>
+                                            </div>
+                                            <div class="intent-comment">
+                                                &ldquo;Can you do my hair Friday? Need a cut + color ASAP 🙏&rdquo;
+                                            </div>
+                                            <div class="intent-score">
+                                                <div class="score-label">Intent Score</div>
+                                                <div class="score-bar">
+                                                    <div class="score-fill" style="width: 95%"></div>
+                                                </div>
+                                                <div class="score-value">95 / 100</div>
+                                            </div>
+                                            <div class="intent-tags">
+                                                <span class="tag urgent">Ready to Book</span>
+                                                <span class="tag location">Houston, TX</span>
+                                                <span class="tag service">Hair Stylist</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="intent-comment">
-                                    &ldquo;Do you serve the Atlanta area? I need someone ASAP.&rdquo;
-                                </div>
-                                <div class="intent-score">
-                                    <div class="score-label">Intent Score</div>
-                                    <div class="score-bar">
-                                        <div class="score-fill" style="width: 92%"></div>
+                            </div>
+                            <!-- Slide 2: B2B -->
+                            <div class="carousel-slide">
+                                <div class="app-window mockup-sm">
+                                    <div class="app-titlebar">
+                                        <div class="app-dots">
+                                            <span class="dot red"></span>
+                                            <span class="dot yellow"></span>
+                                            <span class="dot green"></span>
+                                        </div>
+                                        <span class="app-title">Intent Detection</span>
                                     </div>
-                                    <div class="score-value">92 / 100</div>
-                                </div>
-                                <div class="intent-tags">
-                                    <span class="tag urgent">Urgent</span>
-                                    <span class="tag location">Location-Based</span>
-                                    <span class="tag service">Service Inquiry</span>
+                                    <div class="mockup-body">
+                                        <div class="intent-card">
+                                            <div class="intent-header">
+                                                <i class="fas fa-bolt intent-icon"></i>
+                                                <span>Intent Detected</span>
+                                            </div>
+                                            <div class="intent-source">
+                                                <span class="source-avatar">KP</span>
+                                                <div>
+                                                    <div class="source-name">@healthtech_kate</div>
+                                                    <div class="source-context">Commented on @startuptok</div>
+                                                </div>
+                                            </div>
+                                            <div class="intent-comment">
+                                                &ldquo;We&rsquo;re a healthtech startup looking for a web agency. Who&rsquo;s good with HIPAA?&rdquo;
+                                            </div>
+                                            <div class="intent-score">
+                                                <div class="score-label">Intent Score</div>
+                                                <div class="score-bar">
+                                                    <div class="score-fill" style="width: 96%"></div>
+                                                </div>
+                                                <div class="score-value">96 / 100</div>
+                                            </div>
+                                            <div class="intent-tags">
+                                                <span class="tag urgent">High Budget</span>
+                                                <span class="tag location">Healthtech</span>
+                                                <span class="tag service">Web Agency</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +282,7 @@
                 <div class="feature-text">
                     <div class="feature-label">02</div>
                     <h3>Lead Warmth Scoring</h3>
-                    <p>Every prospect is ranked by purchase readiness. Warm leads ask &ldquo;How does this work?&rdquo; &mdash; hot leads ask &ldquo;Who do you recommend?&rdquo; or &ldquo;Do you serve my area?&rdquo;</p>
+                    <p>Every prospect is ranked by purchase readiness. Warm leads are curious. Hot leads are ready to spend. You&rsquo;ll always know who to contact first.</p>
                     <p class="feature-highlight">You focus on the buyers most likely to convert.</p>
                 </div>
                 <div class="feature-mockup">
@@ -228,44 +347,136 @@
                     <p class="feature-highlight">Reach buyers the moment they raise their hand.</p>
                 </div>
                 <div class="feature-mockup">
-                    <div class="app-window mockup-sm">
-                        <div class="app-titlebar">
-                            <div class="app-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <span class="app-title">Prospect Profile</span>
+                    <div class="carousel" data-carousel="prospect">
+                        <div class="carousel-tabs">
+                            <button class="carousel-tab active" data-slide="0">Local Services</button>
+                            <button class="carousel-tab" data-slide="1">B2B &amp; Agencies</button>
                         </div>
-                        <div class="mockup-body">
-                            <div class="prospect-card">
-                                <div class="prospect-header">
-                                    <div class="prospect-avatar">MJ</div>
-                                    <div>
-                                        <div class="prospect-name">Maria Jones</div>
-                                        <div class="prospect-handle">@maria_jones</div>
+                        <div class="carousel-slides">
+                            <!-- Slide 1: Local Services -->
+                            <div class="carousel-slide active">
+                                <div class="app-window mockup-sm">
+                                    <div class="app-titlebar">
+                                        <div class="app-dots">
+                                            <span class="dot red"></span>
+                                            <span class="dot yellow"></span>
+                                            <span class="dot green"></span>
+                                        </div>
+                                        <span class="app-title">Customer Profile</span>
                                     </div>
-                                    <div class="prospect-score hot">92</div>
-                                </div>
-                                <div class="prospect-details">
-                                    <div class="detail-row">
-                                        <i class="fas fa-map-marker-alt"></i> Atlanta, GA
+                                    <div class="mockup-body">
+                                        <div class="prospect-card">
+                                            <div class="prospect-header">
+                                                <div class="prospect-avatar">BT</div>
+                                                <div>
+                                                    <div class="prospect-name">Brittany T.</div>
+                                                    <div class="prospect-handle">@brittany_tx</div>
+                                                </div>
+                                                <div class="prospect-score hot">95</div>
+                                            </div>
+                                            <div class="prospect-details">
+                                                <div class="detail-row">
+                                                    <i class="fas fa-map-marker-alt"></i> Houston, TX
+                                                </div>
+                                                <div class="detail-row">
+                                                    <i class="fab fa-tiktok"></i> Active 4 min ago
+                                                </div>
+                                            </div>
+                                            <div class="prospect-comment-box">
+                                                <div class="comment-label">Original Comment (unanswered)</div>
+                                                &ldquo;Can you do my hair Friday? Need a cut + color ASAP 🙏&rdquo;
+                                            </div>
+                                            <button class="connect-btn">
+                                                <i class="fas fa-paper-plane"></i> Connect Now
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="detail-row">
-                                        <i class="fab fa-tiktok"></i> Active 2 min ago
+                                </div>
+                            </div>
+                            <!-- Slide 2: B2B -->
+                            <div class="carousel-slide">
+                                <div class="app-window mockup-sm">
+                                    <div class="app-titlebar">
+                                        <div class="app-dots">
+                                            <span class="dot red"></span>
+                                            <span class="dot yellow"></span>
+                                            <span class="dot green"></span>
+                                        </div>
+                                        <span class="app-title">Lead Profile</span>
+                                    </div>
+                                    <div class="mockup-body">
+                                        <div class="prospect-card">
+                                            <div class="prospect-header">
+                                                <div class="prospect-avatar">KP</div>
+                                                <div>
+                                                    <div class="prospect-name">Kate Parker</div>
+                                                    <div class="prospect-handle">@healthtech_kate</div>
+                                                </div>
+                                                <div class="prospect-score hot">96</div>
+                                            </div>
+                                            <div class="prospect-details">
+                                                <div class="detail-row">
+                                                    <i class="fas fa-building"></i> Healthtech Startup
+                                                </div>
+                                                <div class="detail-row">
+                                                    <i class="fab fa-tiktok"></i> Active 5 min ago
+                                                </div>
+                                            </div>
+                                            <div class="prospect-comment-box">
+                                                <div class="comment-label">Original Comment</div>
+                                                &ldquo;We&rsquo;re a healthtech startup looking for a web agency. Who&rsquo;s good with HIPAA?&rdquo;
+                                            </div>
+                                            <button class="connect-btn">
+                                                <i class="fas fa-paper-plane"></i> Connect Now
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="prospect-comment-box">
-                                    <div class="comment-label">Original Comment</div>
-                                    &ldquo;Who do you recommend for HVAC in the Atlanta area? I need someone ASAP.&rdquo;
-                                </div>
-                                <button class="connect-btn">
-                                    <i class="fas fa-paper-plane"></i> Connect Now
-                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONSULTANT -->
+    <section id="consultant" class="consultant">
+        <div class="container">
+            <div class="consultant-content">
+                <div class="consultant-badge">Personally Managed</div>
+                <h2>Your Leads. My Oversight.</h2>
+                <p class="consultant-intro">AXL Sales isn&rsquo;t a self-serve tool you figure out alone. It&rsquo;s a managed service. I&rsquo;m the one managing it.</p>
+                <div class="consultant-profile">
+                    <div class="consultant-info">
+                        <h3>Cristy Kennedy</h3>
+                        <p class="consultant-title">Lead Strategist &amp; Founder</p>
+                    </div>
+                </div>
+                <div class="consultant-services">
+                    <div class="service-item">
+                        <i class="fas fa-crosshairs"></i>
+                        <div>
+                            <strong>Custom Targeting Setup</strong>
+                            <p>I configure your lead search based on your business, location, and ideal customer. Not a one-size-fits-all template.</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-user-check"></i>
+                        <div>
+                            <strong>Lead Verification</strong>
+                            <p>Every lead is reviewed for quality before it reaches you. No junk. No false positives.</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Ongoing Optimization</strong>
+                            <p>I monitor your results and refine your targeting over time so your leads keep getting better.</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="consultant-closing">The leads come to you. I make sure the right ones do.</p>
             </div>
         </div>
     </section>
@@ -353,18 +564,14 @@
             <div class="platform-grid">
                 <div class="platform-card active">
                     <div class="platform-status">Live Now</div>
-                    <i class="fab fa-tiktok platform-icon"></i>
-                    <p class="platform-name">TikTok</p>
-                    <p class="platform-desc">Finding high-intent buyers in TikTok comments today.</p>
-                </div>
-                <div class="platform-card upcoming">
-                    <div class="platform-status">Coming Soon</div>
-                    <div class="platform-icons">
+                    <div class="platform-icons-row">
+                        <i class="fab fa-tiktok"></i>
                         <i class="fab fa-x-twitter"></i>
                         <i class="fab fa-instagram"></i>
                         <i class="fab fa-youtube"></i>
+                        <i class="fab fa-linkedin"></i>
                     </div>
-                    <p class="platform-desc">Expanding intent detection across every major platform.</p>
+                    <p class="platform-desc">Finding high-intent buyers across all major platforms.</p>
                 </div>
             </div>
         </div>
@@ -391,8 +598,8 @@
                     <h4>Product</h4>
                     <ul>
                         <li><a href="#features">Features</a></li>
+                        <li><a href="#consultant">Your Strategist</a></li>
                         <li><a href="#comparison">Why AXL</a></li>
-                        <li><a href="#platform-roadmap">Platforms</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

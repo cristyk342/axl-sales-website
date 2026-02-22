@@ -200,6 +200,19 @@ section .container {
     text-align: left;
 }
 
+.hero-managed-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--light-text);
+    margin-bottom: 1rem;
+}
+
+.hero-managed-tag i {
+    color: var(--secondary-color);
+}
+
 .hero-badge {
     display: inline-block;
     padding: 0.375rem 1rem;
@@ -220,6 +233,15 @@ section .container {
     margin-bottom: 1.25rem;
     line-height: 1.1;
     letter-spacing: -0.03em;
+    transition: opacity 0.3s ease;
+}
+
+/* Hero copy transitions */
+[data-hero-badge],
+[data-hero-headline],
+[data-hero-subheadline],
+[data-hero-cta] {
+    transition: opacity 0.3s ease;
 }
 
 .hero .subheadline {
@@ -255,6 +277,74 @@ section .container {
 .primary-btn:hover {
     box-shadow: 0 6px 20px rgba(254, 44, 85, 0.4) !important;
     transform: translateY(-2px);
+}
+
+/* ============================================
+   CAROUSEL
+   ============================================ */
+.carousel {
+    position: relative;
+}
+
+.carousel-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.carousel-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--light-text);
+    background: var(--section-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.carousel-tab:hover {
+    color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+.carousel-tab.active {
+    color: white;
+    background: var(--text-color);
+    border-color: var(--text-color);
+}
+
+.carousel-slides {
+    position: relative;
+}
+
+.carousel-slide {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.carousel-slide.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Feature mockup carousel adjustments */
+.feature-mockup .carousel-tabs {
+    justify-content: flex-start;
+}
+
+.feature-row.reverse .feature-mockup .carousel-tabs {
+    justify-content: flex-end;
+}
+
+@media (max-width: 1024px) {
+    .feature-mockup .carousel-tabs,
+    .feature-row.reverse .feature-mockup .carousel-tabs {
+        justify-content: center;
+    }
 }
 
 /* ============================================
@@ -899,6 +989,132 @@ section .container {
 }
 
 /* ============================================
+   CONSULTANT SECTION
+   ============================================ */
+.consultant {
+    padding: 7rem 0;
+    background: var(--background);
+}
+
+.consultant-content {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.consultant-badge {
+    display: inline-block;
+    padding: 0.375rem 1rem;
+    background: rgba(37, 244, 238, 0.12);
+    color: #0E7490;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+}
+
+.consultant h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-color);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+}
+
+.consultant-intro {
+    font-size: 1.15rem;
+    color: var(--light-text);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.consultant-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.consultant-info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.consultant-title {
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.consultant-services {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+    margin-bottom: 2.5rem;
+}
+
+.service-item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--section-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.service-item i {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+    margin-top: 0.15rem;
+}
+
+.service-item strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.35rem;
+}
+
+.service-item p {
+    font-size: 0.95rem;
+    color: var(--light-text);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.consultant-closing {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .consultant {
+        padding: 4rem 0;
+    }
+
+    .consultant h2 {
+        font-size: 2rem;
+    }
+
+    .service-item {
+        padding: 1.25rem;
+    }
+}
+
+/* ============================================
    COMPARISON TABLE
    ============================================ */
 .comparison {
@@ -989,9 +1205,9 @@ section .container {
 
 .platform-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 2rem;
-    max-width: 720px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -1031,6 +1247,15 @@ section .container {
     font-size: 3rem;
     margin-bottom: 0.75rem;
     color: white;
+}
+
+.platform-icons-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1rem;
 }
 
 .platform-card.active .platform-name {
@@ -1294,9 +1519,6 @@ footer p {
         font-size: 0.8rem;
     }
 
-    .platform-grid {
-        grid-template-columns: 1fr;
-    }
 
     .cta h2 {
         font-size: 2rem;
