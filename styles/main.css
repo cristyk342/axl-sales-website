@@ -25,6 +25,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -34,7 +35,6 @@ body {
     background: var(--background);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
 }
 
 .container {
@@ -1426,7 +1426,8 @@ footer p {
 
     .hero-mockup .app-window {
         transform: none;
-        max-width: 600px;
+        max-width: 100%;
+        width: 100%;
         margin: 0 auto;
     }
 
