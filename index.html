@@ -570,6 +570,7 @@
                         <i class="fab fa-instagram"></i>
                         <i class="fab fa-youtube"></i>
                         <i class="fab fa-linkedin"></i>
+                        <i class="fab fa-reddit-alien"></i>
                     </div>
                     <p class="platform-desc">Finding high-intent buyers across all major platforms.</p>
                 </div>
@@ -577,12 +578,49 @@
         </div>
     </section>
 
-    <!-- CTA -->
+    <!-- CTA / GET STARTED FORM -->
     <section id="cta" class="cta">
         <div class="container">
             <h2>Ready to Find Your Next Buyer?</h2>
-            <p>Stop running ads. Start a lead search powered by real intent data.</p>
-            <a href="https://zesty-melba-7c82ce.netlify.app/" class="cta-button">Start My Lead Search</a>
+            <p>Tell us about your business and we&rsquo;ll set up your first lead search.</p>
+            <form class="get-started-form" name="get-started" netlify>
+                <input type="hidden" name="form-name" value="get-started">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="jane@yourbusiness.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="niche">Your Niche / Business Type</label>
+                        <input type="text" id="niche" name="niche" placeholder="e.g. Hair Stylist, HVAC, Marketing Agency" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Target Location</label>
+                        <input type="text" id="location" name="location" placeholder="e.g. Houston, TX or Nationwide">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="platforms">Platform(s) You&rsquo;re On</label>
+                        <input type="text" id="platforms" name="platforms" placeholder="e.g. TikTok, Instagram, LinkedIn">
+                    </div>
+                    <div class="form-group">
+                        <label for="socials">Your Social Handle(s)</label>
+                        <input type="text" id="socials" name="socials" placeholder="e.g. @yourbusiness">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Anything else we should know? <span class="form-optional">(optional)</span></label>
+                    <textarea id="message" name="message" rows="3" placeholder="Describe your ideal customer or any specific goals..."></textarea>
+                </div>
+                <button type="submit" class="cta-button form-submit-btn">Get My First Leads</button>
+            </form>
         </div>
     </section>
 
