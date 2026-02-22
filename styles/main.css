@@ -1460,6 +1460,10 @@ footer p {
 }
 
 @media (max-width: 768px) {
+    .hero-mockup {
+        display: none;
+    }
+
     .container {
         padding: 0 1rem;
         width: 95%;
