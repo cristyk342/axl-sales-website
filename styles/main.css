@@ -1420,7 +1420,11 @@ footer p {
         gap: 3rem;
     }
 
-    .hero-content {
+    .hero-content,
+    .hero-mockup {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
         text-align: center;
     }
 
@@ -1429,6 +1433,7 @@ footer p {
         max-width: 100%;
         width: 100%;
         margin: 0 auto;
+        box-sizing: border-box;
     }
 
     .hero-mockup:hover .app-window {
