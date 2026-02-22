@@ -1259,9 +1259,10 @@ section .container {
 
 .platform-icons-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 1.5rem;
-    font-size: 2.5rem;
+    gap: 1rem;
+    font-size: 2rem;
     color: white;
     margin-bottom: 1rem;
 }
