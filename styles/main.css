@@ -112,6 +112,7 @@ section .container {
     border-radius: 10px !important;
     text-transform: none !important;
     letter-spacing: 0 !important;
+    color: white !important;
 }
 
 .menu-toggle {
