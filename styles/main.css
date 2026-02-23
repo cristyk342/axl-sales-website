@@ -172,7 +172,7 @@ section .container {
    HERO SECTION
    ============================================ */
 .hero {
-    padding: 10rem 0 6rem;
+    padding: 7rem 0 6rem;
     background: var(--background);
     position: relative;
     overflow: visible;
