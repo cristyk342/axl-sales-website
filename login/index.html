@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AXL Sales - NetContenta Lead Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FE2C55;
+            --primary-light: rgba(254,44,85,0.1);
+            --teal: #25F4EE;
+            --teal-light: rgba(37,244,238,0.12);
+            --text: #1E293B;
+            --text-mid: #475569;
+            --text-light: #94A3B8;
+            --bg: #F1F5F9;
+            --sidebar-bg: #ffffff;
+            --card: #ffffff;
+            --border: #E2E8F0;
+            --hot: #FE2C55;
+            --hot-bg: rgba(254,44,85,0.1);
+            --warm: #F97316;
+            --warm-bg: rgba(249,115,22,0.1);
+            --lukewarm: #EAB308;
+            --lukewarm-bg: rgba(234,179,8,0.1);
+            --green: #10B981;
+            --green-bg: rgba(16,185,129,0.1);
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --radius: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========== LOGIN ========== */
+        #login-gate {
+            position: fixed; inset: 0;
+            background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 44px 40px;
+            width: 360px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .login-logo { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+        .login-logo span { color: var(--primary); }
+        .login-sub { font-size: 0.68rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 30px; }
+
+        .login-field { text-align: left; margin-bottom: 14px; }
+        .login-field label { font-size: 0.72rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; display: block; margin-bottom: 5px; }
+        .login-field input {
+            width: 100%; padding: 10px 14px;
+            border: 1px solid var(--border); border-radius: 8px;
+            font-size: 0.9rem; font-family: inherit; outline: none;
+            transition: border-color 0.15s;
+        }
+        .login-field input:focus { border-color: var(--primary); }
+
+        .login-btn {
+            width: 100%; padding: 11px;
+            background: var(--primary); color: white;
+            border: none; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 700; cursor: pointer;
+            font-family: inherit; margin-top: 6px;
+            transition: background 0.12s;
+        }
+        .login-btn:hover { background: #e01245; }
+        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        #login-error {
+            color: var(--hot); font-size: 0.75rem;
+            margin-top: 10px; display: none;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 220px; min-width: 220px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-logo { padding: 20px 20px 16px; border-bottom: 1px solid var(--border); }
+        .sidebar-logo .logo-text { font-size: 1.2rem; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+        .sidebar-logo .logo-accent { color: var(--primary); }
+        .sidebar-logo .logo-sub { font-size: 0.65rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 1px; }
+
+        .sidebar-section-label { padding: 16px 20px 6px; font-size: 0.65rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 1.5px; }
+
+        .sidebar-nav { padding: 4px 10px; flex: 1; }
+
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 12px; border-radius: 7px; cursor: pointer;
+            color: var(--text-mid); font-size: 0.855rem; font-weight: 500;
+            transition: all 0.15s; margin-bottom: 2px; user-select: none;
+        }
+        .nav-item:hover { background: var(--bg); color: var(--text); }
+        .nav-item.active { background: var(--primary-light); color: var(--primary); }
+        .nav-item .nav-icon { width: 16px; text-align: center; font-size: 0.8rem; }
+
+        .sidebar-bottom { padding: 16px; border-top: 1px solid var(--border); }
+
+        .sidebar-badge {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 12px; background: var(--primary-light); border-radius: 8px;
+        }
+        .sidebar-badge .badge-icon { width: 28px; height: 28px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; }
+        .sidebar-badge .badge-text { font-size: 0.75rem; font-weight: 600; color: var(--primary); line-height: 1.3; }
+        .sidebar-badge .badge-sub { font-size: 0.65rem; color: var(--text-light); font-weight: 400; }
+
+        .logout-btn {
+            display: flex; align-items: center; gap: 7px;
+            width: 100%; margin-top: 8px; padding: 7px 12px;
+            background: none; border: 1px solid var(--border); border-radius: 7px;
+            color: var(--text-light); font-size: 0.75rem; font-weight: 500;
+            cursor: pointer; font-family: inherit; transition: all 0.12s;
+        }
+        .logout-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+
+        /* ========== MAIN ========== */
+        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+        .topbar {
+            background: var(--card); border-bottom: 1px solid var(--border);
+            padding: 14px 28px; display: flex; align-items: center;
+            justify-content: space-between; flex-shrink: 0;
+        }
+        .topbar-left { display: flex; flex-direction: column; gap: 2px; }
+        .topbar-title { font-size: 1rem; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+        .topbar-sub { font-size: 0.75rem; color: var(--text-light); }
+        .topbar-right { display: flex; align-items: center; gap: 10px; }
+        .report-date { font-size: 0.75rem; color: var(--text-mid); background: var(--bg); border: 1px solid var(--border); padding: 5px 12px; border-radius: 6px; font-weight: 500; }
+        .confidential-badge { font-size: 0.7rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 5px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ========== VIEWS ========== */
+        .view { display: none; flex: 1; overflow-y: auto; padding: 24px 28px; flex-direction: column; gap: 20px; }
+        .view.active { display: flex; }
+
+        /* ========== STAT CARDS ========== */
+        .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; flex-shrink: 0; }
+        .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 14px; }
+        .stat-icon { width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+        .stat-icon.total { background: var(--teal-light); color: #0891B2; }
+        .stat-icon.hot { background: var(--hot-bg); color: var(--hot); }
+        .stat-icon.warm { background: var(--warm-bg); color: var(--warm); }
+        .stat-icon.lukewarm { background: var(--lukewarm-bg); color: var(--lukewarm); }
+        .stat-icon.green { background: var(--green-bg); color: var(--green); }
+        .stat-info { flex: 1; }
+        .stat-value { font-size: 1.55rem; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; }
+        .stat-label { font-size: 0.72rem; color: var(--text-light); font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 3px; }
+
+        /* ========== SECTION HEADER ========== */
+        .section-header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .section-title { font-size: 0.9rem; font-weight: 700; color: var(--text); letter-spacing: -0.2px; }
+        .section-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 1px; }
+        .filter-pills { display: flex; gap: 6px; }
+        .pill { font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); color: var(--text-mid); background: var(--card); transition: all 0.12s; }
+        .pill.active-all { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+        .pill.active-hot { background: var(--hot-bg); color: var(--hot); border-color: var(--hot); }
+        .pill.active-warm { background: var(--warm-bg); color: var(--warm); border-color: var(--warm); }
+        .pill.active-lukewarm { background: var(--lukewarm-bg); color: var(--lukewarm); border-color: var(--lukewarm); }
+
+        /* ========== LEAD TABLE ========== */
+        .table-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; flex-shrink: 0; }
+        .lead-table { width: 100%; border-collapse: collapse; }
+        .lead-table thead tr { background: var(--bg); border-bottom: 1px solid var(--border); }
+        .lead-table th { padding: 10px 14px; text-align: left; font-size: 0.68rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
+        .lead-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
+        .lead-table tbody tr:last-child { border-bottom: none; }
+        .lead-table tbody tr:hover { background: #FAFBFC; }
+        .lead-table tbody tr.row-contacted { opacity: 0.65; background: #f8fafb !important; }
+        .lead-table td { padding: 13px 14px; font-size: 0.82rem; color: var(--text); vertical-align: top; }
+
+        .lead-name-block { display: flex; align-items: flex-start; gap: 10px; }
+        .lead-avatar { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; color: white; }
+        .lead-avatar.hot-av { background: linear-gradient(135deg, #FE2C55, #e01245); }
+        .lead-avatar.warm-av { background: linear-gradient(135deg, #F97316, #ea6a00); }
+        .lead-avatar.lukewarm-av { background: linear-gradient(135deg, #EAB308, #ca9a00); }
+        .lead-name { font-weight: 700; color: var(--text); font-size: 0.84rem; line-height: 1.2; }
+        .lead-url { font-size: 0.7rem; color: var(--text-light); margin-top: 2px; }
+
+        .status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.3px; }
+        .status-badge.hot { background: var(--hot-bg); color: var(--hot); }
+        .status-badge.warm { background: var(--warm-bg); color: var(--warm); }
+        .status-badge.lukewarm { background: var(--lukewarm-bg); color: var(--lukewarm); }
+        .status-badge.contacted { background: var(--green-bg); color: var(--green); }
+        .status-badge.hot::before, .status-badge.warm::before, .status-badge.lukewarm::before, .status-badge.contacted::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; display: inline-block; }
+
+        .score-block { display: flex; align-items: center; gap: 8px; }
+        .score-num { font-weight: 700; font-size: 0.9rem; min-width: 26px; }
+        .score-num.hot-score { color: var(--hot); }
+        .score-num.warm-score { color: var(--warm); }
+        .score-num.lukewarm-score { color: var(--lukewarm); }
+        .score-bar-bg { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; min-width: 50px; }
+        .score-bar-fill { height: 100%; border-radius: 3px; }
+        .score-bar-fill.hot { background: var(--hot); }
+        .score-bar-fill.warm { background: var(--warm); }
+        .score-bar-fill.lukewarm { background: var(--lukewarm); }
+
+        .cell-text { font-size: 0.79rem; color: var(--text-mid); line-height: 1.45; max-width: 200px; }
+        .platform-tag { font-size: 0.74rem; color: var(--text-mid); background: var(--bg); border: 1px solid var(--border); padding: 3px 8px; border-radius: 5px; display: inline-block; font-weight: 500; }
+        .dm-block .dm-name { font-weight: 600; color: var(--text); font-size: 0.81rem; }
+        .dm-block .dm-title { font-size: 0.7rem; color: var(--text-light); margin-top: 1px; }
+
+        .fit-chips { display: flex; flex-direction: column; gap: 4px; }
+        .fit-chip { font-size: 0.68rem; font-weight: 600; color: #0891B2; background: var(--teal-light); border-radius: 4px; padding: 2px 6px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+        .fit-chip i { font-size: 0.6rem; }
+
+        .contact-links { display: flex; flex-direction: column; gap: 4px; }
+        .contact-link { font-size: 0.72rem; color: var(--primary); font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+        .contact-link:hover { text-decoration: underline; }
+
+        .signal-box { background: var(--bg); border-radius: 6px; padding: 8px 10px; font-size: 0.74rem; color: var(--text-mid); line-height: 1.45; max-width: 190px; }
+        .signal-box .angle-label { font-size: 0.65rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+
+        /* ========== ACTION BUTTONS ========== */
+        .action-btns { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+        .action-btn {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 4px 9px; border-radius: 6px; font-size: 0.7rem; font-weight: 600;
+            cursor: pointer; border: 1px solid var(--border); background: var(--card);
+            color: var(--text-mid); font-family: inherit; transition: all 0.12s; white-space: nowrap;
+        }
+        .action-btn:hover { background: var(--bg); }
+        .action-btn.contacted-btn { background: var(--green-bg); color: var(--green); border-color: var(--green); }
+        .action-btn.contacted-btn:hover { background: rgba(16,185,129,0.18); }
+        .action-btn.archive-btn:hover { background: var(--hot-bg); color: var(--hot); border-color: var(--hot); }
+        .action-btn i { font-size: 0.65rem; }
+
+        /* ========== HOT PROSPECTS VIEW ========== */
+        .priority-banner { background: linear-gradient(135deg, #FE2C55 0%, #c01040 100%); border-radius: var(--radius); padding: 18px 22px; color: white; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .priority-banner .pb-title { font-size: 1rem; font-weight: 800; letter-spacing: -0.3px; }
+        .priority-banner .pb-sub { font-size: 0.75rem; opacity: 0.8; margin-top: 3px; }
+        .priority-banner .pb-badge { background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 16px; font-size: 0.8rem; font-weight: 700; }
+
+        .prospect-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex-shrink: 0; }
+        .prospect-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+        .prospect-card.hot-card { border-top: 3px solid var(--hot); }
+        .prospect-card.warm-card { border-top: 3px solid var(--warm); }
+        .prospect-card.contacted-card { opacity: 0.7; }
+
+        .pc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .pc-name-block { display: flex; align-items: center; gap: 10px; }
+        .pc-avatar { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: white; }
+        .pc-avatar.hot-av { background: linear-gradient(135deg, #FE2C55, #e01245); }
+        .pc-avatar.warm-av { background: linear-gradient(135deg, #F97316, #ea6a00); }
+        .pc-company { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+        .pc-url { font-size: 0.7rem; color: var(--text-light); }
+        .pc-score { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+        .pc-score.hot { color: var(--hot); }
+        .pc-score.warm { color: var(--warm); }
+        .pc-score-label { font-size: 0.65rem; color: var(--text-light); text-align: right; text-transform: uppercase; letter-spacing: 0.8px; }
+        .pc-divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+        .pc-row { display: flex; gap: 8px; margin-bottom: 10px; }
+        .pc-label { font-size: 0.7rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; min-width: 80px; padding-top: 1px; }
+        .pc-value { font-size: 0.8rem; color: var(--text-mid); line-height: 1.4; }
+        .pc-value b { color: var(--text); font-weight: 600; }
+        .pc-action { margin-top: 14px; background: var(--bg); border-radius: 8px; padding: 12px 14px; }
+        .pc-action-label { font-size: 0.65rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px; }
+        .pc-action-text { font-size: 0.8rem; color: var(--text-mid); line-height: 1.4; font-style: italic; }
+        .pc-links { display: flex; gap: 8px; margin-top: 14px; }
+        .pc-link-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 7px; border-radius: 7px; font-size: 0.75rem; font-weight: 600; text-decoration: none; border: 1px solid var(--border); color: var(--text-mid); background: var(--card); transition: all 0.12s; }
+        .pc-link-btn:hover { background: var(--bg); color: var(--text); }
+        .pc-action-row { display: flex; gap: 8px; margin-top: 10px; }
+
+        /* ========== INTENT SIGNALS VIEW ========== */
+        .signal-feed { display: flex; flex-direction: column; gap: 14px; flex-shrink: 0; }
+        .signal-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: start; }
+        .signal-card.hot-signal { border-left: 3px solid var(--hot); }
+        .signal-card.warm-signal { border-left: 3px solid var(--warm); }
+        .signal-indicator { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+        .signal-indicator.hot { background: var(--hot-bg); color: var(--hot); }
+        .signal-indicator.warm { background: var(--warm-bg); color: var(--warm); }
+        .signal-body { flex: 1; }
+        .signal-company { font-weight: 700; font-size: 0.88rem; color: var(--text); margin-bottom: 2px; }
+        .signal-person { font-size: 0.72rem; color: var(--text-light); margin-bottom: 10px; }
+        .signal-quote { background: var(--bg); border-radius: 7px; padding: 10px 13px; font-size: 0.8rem; color: var(--text-mid); line-height: 1.5; border-left: 3px solid var(--border); font-style: italic; margin-bottom: 10px; }
+        .signal-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+        .signal-tag { font-size: 0.68rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; background: var(--bg); color: var(--text-mid); border: 1px solid var(--border); }
+        .signal-tag.alert { background: var(--hot-bg); color: var(--hot); border-color: transparent; }
+        .signal-tag.source { background: var(--teal-light); color: #0891B2; border-color: transparent; }
+        .signal-meta { text-align: right; flex-shrink: 0; }
+        .signal-score-big { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+        .signal-score-big.hot { color: var(--hot); }
+        .signal-score-big.warm { color: var(--warm); }
+        .signal-score-sub { font-size: 0.65rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; }
+
+        /* ========== COMPANY INTEL VIEW ========== */
+        .intel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; flex-shrink: 0; }
+        .intel-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+        .intel-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+        .intel-avatar { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 700; color: white; }
+        .intel-company-name { font-weight: 700; font-size: 0.92rem; color: var(--text); }
+        .intel-company-url { font-size: 0.7rem; color: var(--text-light); margin-top: 1px; }
+        .intel-field { margin-bottom: 11px; }
+        .intel-field-label { font-size: 0.65rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+        .intel-field-value { font-size: 0.8rem; color: var(--text-mid); line-height: 1.4; }
+        .intel-field-value b { color: var(--text); font-weight: 600; }
+        .intel-status-row { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+        /* ========== METHODOLOGY ========== */
+        .method-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; flex-shrink: 0; padding-bottom: 6px; }
+        .method-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+        .method-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+        .method-name { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+        .method-weight { font-size: 0.7rem; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 2px 7px; border-radius: 10px; }
+        .method-desc { font-size: 0.72rem; color: var(--text-light); line-height: 1.4; }
+
+        /* ========== SETTINGS ========== */
+        .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex-shrink: 0; }
+        .settings-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+        .settings-card-title { font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .settings-card-title i { color: var(--primary); font-size: 0.8rem; }
+        .settings-field { margin-bottom: 14px; }
+        .settings-label { font-size: 0.7rem; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px; }
+        .settings-value { font-size: 0.85rem; color: var(--text); font-weight: 500; background: var(--bg); border: 1px solid var(--border); border-radius: 7px; padding: 8px 12px; }
+        .settings-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+        /* ========== LOADING ========== */
+        .loading-cell { text-align: center; padding: 40px; color: var(--text-light); font-size: 0.85rem; }
+        .loading-cell i { margin-right: 8px; }
+
+        /* ========== ORDER VIEW ========== */
+        .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+        .order-section-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 12px; }
+        .package-cards { display: flex; flex-direction: column; gap: 10px; }
+        .package-card {
+            border: 2px solid var(--border); border-radius: var(--radius); padding: 16px 18px;
+            cursor: pointer; transition: all 0.15s; background: var(--card);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .package-card:hover { border-color: var(--primary); background: var(--primary-light); }
+        .package-card.selected { border-color: var(--primary); background: var(--primary-light); }
+        .package-card .pk-left { display: flex; flex-direction: column; gap: 3px; }
+        .package-card .pk-name { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+        .package-card .pk-desc { font-size: 0.75rem; color: var(--text-mid); }
+        .package-card .pk-price { font-size: 1.15rem; font-weight: 800; color: var(--primary); }
+        .package-card .pk-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+        .package-card.selected .pk-check { background: var(--primary); border-color: var(--primary); color: white; font-size: 0.6rem; }
+        .cadence-options { display: flex; flex-direction: column; gap: 10px; }
+        .cadence-option {
+            border: 2px solid var(--border); border-radius: var(--radius); padding: 14px 18px;
+            cursor: pointer; transition: all 0.15s; background: var(--card);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .cadence-option:hover { border-color: var(--teal); background: var(--teal-light); }
+        .cadence-option.selected { border-color: var(--teal); background: var(--teal-light); }
+        .cadence-option .cad-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
+        .cadence-option.selected .cad-dot { background: #25F4EE; border-color: #25F4EE; color: white; font-size: 0.6rem; }
+        .cadence-option .cad-label { font-weight: 600; font-size: 0.85rem; color: var(--text); }
+        .cadence-option .cad-sub { font-size: 0.72rem; color: var(--text-light); margin-top: 2px; }
+        .order-summary-box {
+            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 20px; margin-top: 20px;
+        }
+        .order-summary-row { display: flex; justify-content: space-between; padding: 7px 0; font-size: 0.82rem; border-bottom: 1px solid var(--border); }
+        .order-summary-row:last-child { border-bottom: none; font-weight: 700; font-size: 0.9rem; }
+        .order-submit-btn {
+            width: 100%; padding: 14px; background: var(--primary); color: white;
+            border: none; border-radius: var(--radius); font-size: 0.9rem; font-weight: 700;
+            cursor: pointer; font-family: inherit; transition: opacity 0.15s; margin-top: 14px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .order-submit-btn:hover { opacity: 0.88; }
+        .order-submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .order-history { margin-top: 28px; }
+        .order-history-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; font-size: 0.82rem; }
+        .order-status-badge { padding: 3px 9px; border-radius: 20px; font-size: 0.68rem; font-weight: 700; }
+        .order-status-badge.pending_payment { background: var(--lukewarm-bg); color: var(--lukewarm); }
+        .order-status-badge.paid { background: var(--green-bg); color: var(--green); }
+        .order-status-badge.fulfilled { background: var(--teal-light); color: #0ea5a0; }
+
+        /* Scrollbar */
+        .view::-webkit-scrollbar { width: 5px; }
+        .view::-webkit-scrollbar-track { background: transparent; }
+        .view::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- LOGIN GATE -->
+<!-- ============================================================ -->
+<div id="login-gate">
+    <div class="login-box">
+        <div class="login-logo">AXL<span> Sales</span></div>
+        <div class="login-sub">Lead Intelligence</div>
+        <div class="login-field">
+            <label>Email</label>
+            <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="login-field">
+            <label>Password</label>
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button class="login-btn" id="login-btn" onclick="doLogin()">Access Report</button>
+        <div id="login-error"></div>
+    </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-text">AXL<span class="logo-accent"> Sales</span></div>
+        <div class="logo-sub">Lead Intelligence</div>
+    </div>
+
+    <div class="sidebar-section-label">Pipeline</div>
+    <nav class="sidebar-nav">
+        <div class="nav-item active" data-view="leads">
+            <span class="nav-icon"><i class="fa-solid fa-crosshairs"></i></span>
+            Lead List
+        </div>
+        <div class="nav-item" data-view="hot">
+            <span class="nav-icon"><i class="fa-solid fa-fire"></i></span>
+            Hot Prospects
+        </div>
+        <div class="nav-item" data-view="signals">
+            <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+            Intent Signals
+        </div>
+        <div class="nav-item" data-view="intel">
+            <span class="nav-icon"><i class="fa-solid fa-building"></i></span>
+            Company Intel
+        </div>
+        <div class="sidebar-section-label" style="padding-left:0; padding-top:14px;">Reports</div>
+        <div class="nav-item" data-view="methodology">
+            <span class="nav-icon"><i class="fa-solid fa-file-lines"></i></span>
+            Methodology
+        </div>
+        <div class="nav-item" data-view="order">
+            <span class="nav-icon"><i class="fa-solid fa-rocket"></i></span>
+            Get More Leads
+        </div>
+        <div class="nav-item" data-view="archived">
+            <span class="nav-icon"><i class="fa-solid fa-box-archive"></i></span>
+            Archived
+        </div>
+        <div class="nav-item" data-view="settings">
+            <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+            Settings
+        </div>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="sidebar-badge">
+            <div class="badge-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div>
+                <div class="badge-text">AXL Pro</div>
+                <div class="badge-sub">Managed Discovery</div>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+    </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-title" id="topbar-title">NetContenta - Lead Intelligence Report</div>
+            <div class="topbar-sub" id="topbar-sub">Qualified prospects from competitive defection signals</div>
+        </div>
+        <div class="topbar-right">
+            <span class="report-date"><i class="fa-regular fa-calendar" style="margin-right:5px; color:var(--text-light);"></i><span id="report-date-label"></span></span>
+            <span class="confidential-badge"><i class="fa-solid fa-lock" style="margin-right:4px;"></i>Confidential</span>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: LEAD LIST -->
+    <!-- ============================================================ -->
+    <div class="view active" id="view-leads">
+
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="stat-icon total"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-total">—</div>
+                    <div class="stat-label">Total Leads</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon hot"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-hot" style="color:var(--hot)">—</div>
+                    <div class="stat-label">Hot</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon warm"><i class="fa-solid fa-temperature-half"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-warm" style="color:var(--warm)">—</div>
+                    <div class="stat-label">Warm</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon lukewarm"><i class="fa-solid fa-circle-dot"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-lukewarm" style="color:var(--lukewarm)">—</div>
+                    <div class="stat-label">Lukewarm</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div>
+                <div class="section-title">Active Lead List</div>
+                <div class="section-sub" id="leads-sub">Ranked by purchase readiness</div>
+            </div>
+            <div class="filter-pills">
+                <span class="pill active-all" data-filter="all">All</span>
+                <span class="pill" data-filter="hot">Hot</span>
+                <span class="pill" data-filter="warm">Warm</span>
+                <span class="pill" data-filter="lukewarm">Lukewarm</span>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <table class="lead-table">
+                <thead>
+                    <tr>
+                        <th style="width:16px;">#</th>
+                        <th>Lead / Company</th>
+                        <th>Decision Maker</th>
+                        <th>Industry</th>
+                        <th>Score</th>
+                        <th>Status</th>
+                        <th>Signal Date</th>
+                        <th>Date Added</th>
+                        <th>Current Platform</th>
+                        <th>Key Pain Point</th>
+                        <th>Product Fit</th>
+                        <th>Opening Angle</th>
+                        <th>Reach Out / Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="leads-tbody">
+                    <tr><td colspan="13" class="loading-cell"><i class="fa-solid fa-spinner fa-spin"></i> Loading leads...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <div class="section-header" style="margin-bottom:12px;">
+                <div>
+                    <div class="section-title">Scoring Methodology</div>
+                    <div class="section-sub">Each lead scored 0–100 across four weighted factors</div>
+                </div>
+            </div>
+            <div class="method-row">
+                <div class="method-card">
+                    <div class="method-header"><span class="method-name"><i class="fa-solid fa-clock" style="margin-right:5px;color:var(--primary);"></i>Signal Freshness</span><span class="method-weight">30%</span></div>
+                    <div class="method-desc">How recent is the frustration signal? Signals within 30 days score highest.</div>
+                </div>
+                <div class="method-card">
+                    <div class="method-header"><span class="method-name"><i class="fa-solid fa-user-tie" style="margin-right:5px;color:var(--primary);"></i>Decision-Maker Access</span><span class="method-weight">25%</span></div>
+                    <div class="method-desc">Is the lead a CEO, founder, or budget holder? Direct access dramatically increases conversion.</div>
+                </div>
+                <div class="method-card">
+                    <div class="method-header"><span class="method-name"><i class="fa-solid fa-puzzle-piece" style="margin-right:5px;color:var(--primary);"></i>Product Fit</span><span class="method-weight">25%</span></div>
+                    <div class="method-desc">How many NetContenta features map to the lead's documented pain points?</div>
+                </div>
+                <div class="method-card">
+                    <div class="method-header"><span class="method-name"><i class="fa-solid fa-bolt" style="margin-right:5px;color:var(--primary);"></i>Urgency / Intent</span><span class="method-weight">20%</span></div>
+                    <div class="method-desc">Is the lead actively seeking alternatives, or passively dissatisfied?</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: HOT PROSPECTS -->
+    <!-- ============================================================ -->
+    <div class="view" id="view-hot">
+        <div class="priority-banner">
+            <div>
+                <div class="pb-title" id="hot-banner-title"><i class="fa-solid fa-fire-flame-curved" style="margin-right:8px;"></i>Loading...</div>
+                <div class="pb-sub" id="hot-banner-sub"></div>
+            </div>
+            <div class="pb-badge" id="hot-banner-score"></div>
+        </div>
+        <div class="prospect-cards" id="hot-cards-container">
+            <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-light);"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>
+        </div>
+        <div id="warm-section-header" class="section-header" style="margin-top:4px; display:none;">
+            <div>
+                <div class="section-title" style="color:var(--warm);"><i class="fa-solid fa-temperature-half" style="margin-right:6px;"></i>Warm Leads — Monitor Closely</div>
+                <div class="section-sub">Actively shopping but not yet in crisis mode</div>
+            </div>
+        </div>
+        <div class="prospect-cards" id="warm-cards-container" style="grid-template-columns: 1fr 1fr;"></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: INTENT SIGNALS -->
+    <!-- ============================================================ -->
+    <div class="view" id="view-signals">
+
+        <div class="stat-row">
+            <div class="stat-card">
+                <div class="stat-icon hot"><i class="fa-solid fa-bolt"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-signals" style="color:var(--hot)">—</div>
+                    <div class="stat-label">Active Signals</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon total"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value">30d</div>
+                    <div class="stat-label">Signal Window</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fa-solid fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-verified" style="color:var(--green)">—</div>
+                    <div class="stat-label">Verified Sources</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon warm"><i class="fa-solid fa-user-tie"></i></div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-dm-access">—</div>
+                    <div class="stat-label">DM-Level Access</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div>
+                <div class="section-title">Live Intent Signals</div>
+                <div class="section-sub">Verified frustration and buying signals sourced from public activity</div>
+            </div>
+        </div>
+
+        <div class="signal-feed" id="signals-feed">
+            <div style="text-align:center; padding:40px; color:var(--text-light);"><i class="fa-solid fa-spinner fa-spin"></i> Loading signals...</div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: COMPANY INTEL -->
+    <!-- ============================================================ -->
+    <div class="view" id="view-intel">
+
+        <div class="section-header">
+            <div>
+                <div class="section-title">Company Intelligence</div>
+                <div class="section-sub">Background profiles for each lead in the pipeline</div>
+            </div>
+        </div>
+
+        <div class="intel-grid" id="intel-grid">
+            <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-light);"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: METHODOLOGY (static) -->
+    <!-- ============================================================ -->
+    <div class="view" id="view-methodology">
+
+        <div class="section-header">
+            <div>
+                <div class="section-title">Scoring Methodology</div>
+                <div class="section-sub">How AXL scores and ranks each lead from 0–100</div>
+            </div>
+        </div>
+
+        <div class="method-row">
+            <div class="method-card" style="padding:20px 22px;">
+                <div class="method-header"><span class="method-name" style="font-size:0.88rem;"><i class="fa-solid fa-clock" style="margin-right:6px;color:var(--primary);"></i>Signal Freshness</span><span class="method-weight" style="font-size:0.78rem;">30%</span></div>
+                <div class="method-desc" style="font-size:0.8rem; line-height:1.55;">How recent is the frustration signal? Signals within 30 days score highest. A signal from 6+ months ago drops significantly regardless of severity, as intent may have cooled or the prospect may have already moved to a competitor.</div>
+            </div>
+            <div class="method-card" style="padding:20px 22px;">
+                <div class="method-header"><span class="method-name" style="font-size:0.88rem;"><i class="fa-solid fa-user-tie" style="margin-right:6px;color:var(--primary);"></i>Decision-Maker Access</span><span class="method-weight" style="font-size:0.78rem;">25%</span></div>
+                <div class="method-desc" style="font-size:0.8rem; line-height:1.55;">Is the lead a CEO, founder, or budget holder with direct purchasing authority? Direct access to the decision-maker dramatically increases conversion probability compared to mid-level contacts who require internal approvals.</div>
+            </div>
+            <div class="method-card" style="padding:20px 22px;">
+                <div class="method-header"><span class="method-name" style="font-size:0.88rem;"><i class="fa-solid fa-puzzle-piece" style="margin-right:6px;color:var(--primary);"></i>Product Fit</span><span class="method-weight" style="font-size:0.78rem;">25%</span></div>
+                <div class="method-desc" style="font-size:0.8rem; line-height:1.55;">How many NetContenta features directly address the lead's documented pain points? A 4-feature match scores higher than a 1-feature match. Fit is assessed against AI Voice, AI Chat, Ticketing, and Admin Dashboard.</div>
+            </div>
+            <div class="method-card" style="padding:20px 22px;">
+                <div class="method-header"><span class="method-name" style="font-size:0.88rem;"><i class="fa-solid fa-bolt" style="margin-right:6px;color:var(--primary);"></i>Urgency / Intent</span><span class="method-weight" style="font-size:0.78rem;">20%</span></div>
+                <div class="method-desc" style="font-size:0.8rem; line-height:1.55;">Is the lead actively seeking alternatives (active cancellation, public ask), or passively dissatisfied (mild complaints)? Active signals score 2–3x higher than passive dissatisfaction with no stated action.</div>
+            </div>
+        </div>
+
+        <div class="section-header" style="margin-top:8px;">
+            <div>
+                <div class="section-title">Score Interpretation</div>
+                <div class="section-sub">What each range means for outreach priority</div>
+            </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:12px; flex-shrink:0;">
+            <div class="method-card" style="padding:18px 20px; border-top:3px solid var(--hot);">
+                <div style="font-size:1.4rem; font-weight:800; color:var(--hot); letter-spacing:-1px; margin-bottom:6px;">85–100</div>
+                <div style="font-size:0.82rem; font-weight:700; color:var(--text); margin-bottom:6px;">Hot — Contact Immediately</div>
+                <div class="method-desc" style="font-size:0.78rem; line-height:1.5;">In active search or cancellation. Every day of delay risks losing to a competitor. Personalized outreach within 48 hours is critical.</div>
+            </div>
+            <div class="method-card" style="padding:18px 20px; border-top:3px solid var(--warm);">
+                <div style="font-size:1.4rem; font-weight:800; color:var(--warm); letter-spacing:-1px; margin-bottom:6px;">65–84</div>
+                <div style="font-size:0.82rem; font-weight:700; color:var(--text); margin-bottom:6px;">Warm — Engage This Week</div>
+                <div class="method-desc" style="font-size:0.78rem; line-height:1.5;">Showing clear intent signals but not yet in crisis. Has a window to capture attention before they make a decision. Schedule outreach within 5–7 days.</div>
+            </div>
+            <div class="method-card" style="padding:18px 20px; border-top:3px solid var(--lukewarm);">
+                <div style="font-size:1.4rem; font-weight:800; color:var(--lukewarm); letter-spacing:-1px; margin-bottom:6px;">40–64</div>
+                <div style="font-size:0.82rem; font-weight:700; color:var(--text); margin-bottom:6px;">Lukewarm — Nurture</div>
+                <div class="method-desc" style="font-size:0.78rem; line-height:1.5;">Some fit and mild dissatisfaction but no active buying signals yet. Add to nurture sequence and revisit in 30 days or when a new signal is detected.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: SETTINGS -->
+    <!-- ============================================================ -->
+    <div class="view" id="view-settings">
+
+        <div class="section-header">
+            <div>
+                <div class="section-title">Report Settings</div>
+                <div class="section-sub">Client configuration and report details</div>
+            </div>
+        </div>
+
+        <div class="settings-grid">
+
+            <div class="settings-card">
+                <div class="settings-card-title"><i class="fa-solid fa-building"></i> Client Details</div>
+                <div class="settings-field">
+                    <div class="settings-label">Client Name</div>
+                    <div class="settings-value" id="settings-client-name"></div>
+                </div>
+                <div class="settings-field">
+                    <div class="settings-label">Report Period</div>
+                    <div class="settings-value" id="settings-report-period"></div>
+                </div>
+                <div class="settings-field">
+                    <div class="settings-label">Prepared By</div>
+                    <div class="settings-value">AXL Sales — Managed Discovery</div>
+                </div>
+                <div class="settings-field">
+                    <div class="settings-label">Classification</div>
+                    <div class="settings-value">Confidential — Client Eyes Only</div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-card-title"><i class="fa-solid fa-chart-bar"></i> Report Summary</div>
+                <div class="settings-field">
+                    <div class="settings-label">Total Leads Delivered</div>
+                    <div class="settings-value" id="settings-total">Loading...</div>
+                </div>
+                <div class="settings-field">
+                    <div class="settings-label">Hot Prospects</div>
+                    <div class="settings-value" id="settings-hot" style="color:var(--hot); font-weight:700;">—</div>
+                </div>
+                <div class="settings-field">
+                    <div class="settings-label">Warm Prospects</div>
+                    <div class="settings-value" id="settings-warm" style="color:var(--warm); font-weight:700;">—</div>
+                </div>
+                <div class="settings-field">
+                    <div class="settings-label">Avg. Lead Score</div>
+                    <div class="settings-value" id="settings-avg-score">—</div>
+                </div>
+            </div>
+
+            <div class="settings-card">
+                <div class="settings-card-title"><i class="fa-solid fa-circle-info"></i> About AXL Sales</div>
+                <div style="font-size:0.8rem; color:var(--text-mid); line-height:1.6;">
+                    AXL Sales delivers managed lead discovery for B2B SaaS companies. We monitor competitive defection signals, buying intent, and decision-maker activity to surface the highest-quality pipeline opportunities.
+                </div>
+                <hr class="settings-divider">
+                <div style="font-size:0.75rem; color:var(--text-light);">
+                    <i class="fa-solid fa-envelope" style="margin-right:5px; color:var(--primary);"></i> cristy@axlsales.com
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: ORDER -->
+    <!-- ============================================================ -->
+    <div class="view" id="view-order">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Request More Leads</div>
+                <div class="section-sub">Choose a package and delivery cadence — we'll handle the rest</div>
+            </div>
+        </div>
+
+        <div class="order-grid">
+            <!-- Packages -->
+            <div>
+                <div class="order-section-title"><i class="fa-solid fa-box"></i> Choose a Package</div>
+                <div class="package-cards" id="package-cards"></div>
+            </div>
+            <!-- Cadence -->
+            <div>
+                <div class="order-section-title"><i class="fa-solid fa-calendar-days"></i> Delivery Cadence</div>
+                <div class="cadence-options" id="cadence-options"></div>
+            </div>
+        </div>
+
+        <!-- Summary + Submit -->
+        <div class="order-summary-box" id="order-summary" style="display:none;">
+            <div class="order-section-title" style="margin-bottom:14px;"><i class="fa-solid fa-receipt"></i> Order Summary</div>
+            <div class="order-summary-row"><span>Package</span><span id="sum-package">—</span></div>
+            <div class="order-summary-row"><span>Total Leads</span><span id="sum-leads">—</span></div>
+            <div class="order-summary-row"><span>Delivery</span><span id="sum-cadence">—</span></div>
+            <div class="order-summary-row"><span>Estimated Duration</span><span id="sum-duration">—</span></div>
+            <div class="order-summary-row"><span>Total</span><span id="sum-price" style="color:var(--primary);">—</span></div>
+            <button class="order-submit-btn" id="order-submit-btn" onclick="submitOrder()">
+                <i class="fa-solid fa-credit-card"></i> Proceed to Payment
+            </button>
+            <div style="font-size:0.68rem;color:var(--text-light);text-align:center;margin-top:8px;">
+                Secure payment via Stripe. You'll be redirected to complete checkout.
+            </div>
+        </div>
+
+        <!-- Order History -->
+        <div class="order-history">
+            <div class="order-section-title" style="margin-bottom:12px;"><i class="fa-solid fa-clock-rotate-left"></i> Order History</div>
+            <div id="order-history-list"><div style="color:var(--text-light);font-size:0.82rem;">Loading...</div></div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- VIEW: ARCHIVED -->
+    <!-- ============================================================ -->
+    <div class="view" id="view-archived">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Archived Leads</div>
+                <div class="section-sub">Leads removed from the active pipeline</div>
+            </div>
+        </div>
+        <div id="archived-list"></div>
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const SUPABASE_URL  = 'https://uffzwnyqkelrmxpfedqs.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmZnp3bnlxa2Vscm14cGZlZHFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NTAyMTEsImV4cCI6MjA4OTAyNjIxMX0.1ktUwnClpAMg7R0PCvnU10OU01fUFPqjMfFoTZZTqNE';
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let allLeads    = [];
+let activeFilter = 'all';
+let CLIENT_ID   = null;
+let CLIENT_NAME = null;
+
+function applyClientIdentity(user) {
+    CLIENT_ID   = user.app_metadata?.client_id   || user.email.split('@')[0];
+    CLIENT_NAME = user.app_metadata?.client_name || CLIENT_ID.charAt(0).toUpperCase() + CLIENT_ID.slice(1);
+    document.getElementById('settings-client-name').textContent = CLIENT_NAME;
+    document.getElementById('topbar-title').textContent = CLIENT_NAME + ' - Lead Intelligence Report';
+}
+
+// ============================================================
+// INIT
+// ============================================================
+(async function init() {
+    // Set report date
+    const now = new Date();
+    const period = now.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    document.getElementById('report-date-label').textContent = period;
+    document.getElementById('settings-report-period').textContent = period;
+
+    // Nav tab switching
+    document.querySelectorAll('.nav-item[data-view]').forEach(item => {
+        item.addEventListener('click', () => switchView(item.dataset.view));
+    });
+
+    // Filter pills
+    document.querySelectorAll('.pill[data-filter]').forEach(pill => {
+        pill.addEventListener('click', () => setFilter(pill.dataset.filter));
+    });
+
+    // Enter key on login
+    document.getElementById('login-password').addEventListener('keydown', e => {
+        if (e.key === 'Enter') doLogin();
+    });
+    document.getElementById('login-email').addEventListener('keydown', e => {
+        if (e.key === 'Enter') doLogin();
+    });
+
+    // Check existing session
+    const { data: { session } } = await db.auth.getSession();
+    if (session) {
+        applyClientIdentity(session.user);
+        hideLogin();
+        await loadLeads();
+    }
+})();
+
+// ============================================================
+// AUTH
+// ============================================================
+async function doLogin() {
+    const email    = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const btn      = document.getElementById('login-btn');
+    const errEl    = document.getElementById('login-error');
+
+    errEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+
+    const { error } = await db.auth.signInWithPassword({ email, password });
+
+    btn.disabled = false;
+    btn.textContent = 'Access Report';
+
+    if (error) {
+        errEl.textContent = error.message;
+        errEl.style.display = 'block';
+    } else {
+        const { data: { user } } = await db.auth.getUser();
+        applyClientIdentity(user);
+        hideLogin();
+        await loadLeads();
+    }
+}
+
+async function doLogout() {
+    await db.auth.signOut();
+    allLeads = [];
+    document.getElementById('login-gate').style.display = 'flex';
+    document.getElementById('login-email').value = '';
+    document.getElementById('login-password').value = '';
+}
+
+function hideLogin() {
+    document.getElementById('login-gate').style.display = 'none';
+}
+
+// ============================================================
+// DATA
+// ============================================================
+async function loadLeads() {
+    const { data, error } = await db
+        .from('leads')
+        .select('*')
+        .eq('client_id', CLIENT_ID)
+        .order('score', { ascending: false });
+
+    if (error) {
+        console.error('Failed to load leads:', error);
+        return;
+    }
+
+    allLeads = data;
+    renderAll();
+}
+
+async function toggleContacted(id) {
+    const lead = allLeads.find(l => l.id === id);
+    if (!lead) return;
+
+    const newStatus    = lead.outreach_status === 'contacted' ? 'active' : 'contacted';
+    const contacted_at = newStatus === 'contacted' ? new Date().toISOString() : null;
+
+    const { error } = await db.from('leads')
+        .update({ outreach_status: newStatus, contacted_at })
+        .eq('id', id);
+
+    if (!error) {
+        lead.outreach_status = newStatus;
+        lead.contacted_at    = contacted_at;
+        renderAll();
+    }
+}
+
+async function archiveLead(id) {
+    const lead = allLeads.find(l => l.id === id);
+    if (!lead) return;
+    if (!confirm(`Archive ${lead.company_name}? This hides them from the active pipeline.`)) return;
+
+    const { error } = await db.from('leads')
+        .update({ outreach_status: 'archived' })
+        .eq('id', id);
+
+    if (!error) {
+        lead.outreach_status = 'archived';
+        renderAll();
+    }
+}
+
+async function unarchiveLead(id) {
+    const lead = allLeads.find(l => l.id === id);
+    if (!lead) return;
+
+    const { error } = await db.from('leads')
+        .update({ outreach_status: 'active' })
+        .eq('id', id);
+
+    if (!error) {
+        lead.outreach_status = 'active';
+        renderAll();
+    }
+}
+
+// ============================================================
+// ORDERS
+// ============================================================
+const CADENCES = [
+    { id: 1,  label: '1 lead / week',  sub: 'Steady drip into your pipeline' },
+    { id: 2,  label: '2 leads / week', sub: 'Consistent growth cadence'      },
+    { id: 5,  label: '5 leads / week', sub: 'Aggressive ramp-up mode'        },
+    { id: 99, label: 'All at once',    sub: 'Drop the full batch immediately' },
+];
+
+let PACKAGES = [
+    { id: 'starter', label: 'Starter', leads: 5,  price_cents: 25000, description: '5 qualified leads',  stripe_link: 'https://square.link/u/TyxlsqEc' },
+    { id: 'growth',  label: 'Growth',  leads: 10, price_cents: 45000, description: '10 qualified leads', stripe_link: 'https://square.link/u/K5JNaaEp' },
+    { id: 'scale',   label: 'Scale',   leads: 20, price_cents: 80000, description: '20 qualified leads', stripe_link: 'https://square.link/u/vCzHm54X' },
+];  // overridden by Supabase packages table if available
+let selectedPackage = null;
+let selectedCadence = null;
+
+async function loadPackages() {
+    const { data } = await db.from('packages')
+        .select('*')
+        .eq('active', true)
+        .order('sort_order');
+    if (data?.length) PACKAGES = data;
+}
+
+function renderOrderView() {
+    if (!PACKAGES.length) {
+        document.getElementById('package-cards').innerHTML =
+            '<div style="color:var(--text-light);font-size:0.82rem;">Loading packages...</div>';
+        return;
+    }
+
+    // Package cards
+    document.getElementById('package-cards').innerHTML = PACKAGES.map(p => {
+        const price = '$' + (p.price_cents / 100).toFixed(0);
+        return `<div class="package-card ${selectedPackage === p.id ? 'selected' : ''}" onclick="selectPackage('${p.id}')">
+            <div class="pk-left">
+                <div class="pk-name">${p.label}</div>
+                <div class="pk-desc">${p.description || p.leads + ' qualified leads'}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div class="pk-price">${price}</div>
+                <div class="pk-check">${selectedPackage === p.id ? '<i class="fa-solid fa-check"></i>' : ''}</div>
+            </div>
+        </div>`;
+    }).join('');
+
+    // Cadence options
+    document.getElementById('cadence-options').innerHTML = CADENCES.map(c => `
+        <div class="cadence-option ${selectedCadence === c.id ? 'selected' : ''}" onclick="selectCadence(${c.id})">
+            <div class="cad-dot">${selectedCadence === c.id ? '<i class="fa-solid fa-check"></i>' : ''}</div>
+            <div>
+                <div class="cad-label">${c.label}</div>
+                <div class="cad-sub">${c.sub}</div>
+            </div>
+        </div>`).join('');
+
+    // Summary
+    const summaryEl = document.getElementById('order-summary');
+    if (selectedPackage && selectedCadence) {
+        const pkg = PACKAGES.find(p => p.id === selectedPackage);
+        const cad = CADENCES.find(c => c.id === selectedCadence);
+        const weeks = cad.id === 99 ? 1 : Math.ceil(pkg.leads / cad.id);
+        const price = '$' + (pkg.price_cents / 100).toFixed(0);
+        document.getElementById('sum-package').textContent  = pkg.label;
+        document.getElementById('sum-leads').textContent    = pkg.leads + ' leads';
+        document.getElementById('sum-cadence').textContent  = cad.label;
+        document.getElementById('sum-duration').textContent = cad.id === 99 ? 'Immediate' : `~${weeks} week${weeks > 1 ? 's' : ''}`;
+        document.getElementById('sum-price').textContent    = price;
+        summaryEl.style.display = 'block';
+    } else {
+        summaryEl.style.display = 'none';
+    }
+}
+
+function selectPackage(id) {
+    selectedPackage = id;
+    renderOrderView();
+}
+
+function selectCadence(id) {
+    selectedCadence = id;
+    renderOrderView();
+}
+
+async function submitOrder() {
+    const pkg = PACKAGES.find(p => p.id === selectedPackage);
+    const cad = CADENCES.find(c => c.id === selectedCadence);
+    const btn = document.getElementById('order-submit-btn');
+
+    if (!pkg.stripe_link || pkg.stripe_link.includes('REPLACE')) {
+        alert('Payment link not set up yet. Please contact cristy@axlsales.com to complete your order.');
+        return;
+    }
+
+    // Open window immediately (before any await) so browser doesn't block it
+    const payWin = window.open('about:blank', '_blank');
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving order...';
+
+    const { error } = await db.from('orders').insert({
+        client_id:        CLIENT_ID,
+        package_id:       pkg.id,
+        leads_requested:  pkg.leads,
+        cadence:          cad.id,
+        amount_cents:     pkg.price_cents,
+        status:           'pending_payment',
+    });
+
+    // Always redirect regardless of save result — payment is priority
+    payWin.location.href = pkg.stripe_link;
+    if (!error) await loadOrderHistory();
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-credit-card"></i> Proceed to Payment';
+}
+
+async function loadOrderHistory() {
+    const { data, error } = await db
+        .from('orders')
+        .select('*')
+        .eq('client_id', CLIENT_ID)
+        .order('created_at', { ascending: false });
+
+    const el = document.getElementById('order-history-list');
+    if (error || !data?.length) {
+        el.innerHTML = `<div style="color:var(--text-light);font-size:0.82rem;">No orders yet.</div>`;
+        return;
+    }
+
+    el.innerHTML = data.map(o => {
+        const pkg = PACKAGES.find(p => p.id === o.package_id);
+        const cad = CADENCES.find(c => c.id === o.cadence);
+        const date = new Date(o.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        return `<div class="order-history-row">
+            <div>
+                <div style="font-weight:600;font-size:0.85rem;">${pkg?.label || o.package_id} Package — ${o.leads_requested} leads</div>
+                <div style="font-size:0.72rem;color:var(--text-light);margin-top:2px;">${cad?.label || o.cadence + '/week'} · ${date}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-weight:700;">$${(o.amount_cents/100).toFixed(0)}</span>
+                <span class="order-status-badge ${o.status}">${o.status.replace('_', ' ')}</span>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+const topbarCopy = {
+    leads:       { title: 'NetContenta - Lead Intelligence Report',    sub: 'Qualified prospects from competitive defection signals' },
+    hot:         { title: 'Hot Prospects',                             sub: 'Leads in active cancellation or flight-risk status' },
+    signals:     { title: 'Intent Signals',                            sub: 'Verified frustration and buying signals' },
+    intel:       { title: 'Company Intelligence',                      sub: 'Background profiles for all leads in pipeline' },
+    methodology: { title: 'Scoring Methodology',                       sub: 'How AXL evaluates and ranks each prospect' },
+    order:       { title: 'Request More Leads',                        sub: 'Choose a package and delivery cadence' },
+    archived:    { title: 'Archived Leads',                            sub: 'Leads removed from the active pipeline' },
+    settings:    { title: 'Report Settings',                           sub: 'Client configuration and report details' },
+};
+
+function switchView(view) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelector(`.nav-item[data-view="${view}"]`).classList.add('active');
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+    document.getElementById('topbar-title').textContent = topbarCopy[view].title;
+    document.getElementById('topbar-sub').textContent   = topbarCopy[view].sub;
+    if (view === 'order') { loadPackages().then(renderOrderView); loadOrderHistory(); }
+}
+
+function setFilter(filter) {
+    activeFilter = filter;
+    document.querySelectorAll('.pill[data-filter]').forEach(p => {
+        p.className = 'pill';
+        if (p.dataset.filter === filter) p.classList.add('active-' + filter);
+    });
+    renderLeadList();
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function fmtDate(dateStr) {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function avatarClass(heat) {
+    return heat === 'hot' ? 'hot-av' : heat === 'warm' ? 'warm-av' : 'lukewarm-av';
+}
+
+function scoreClass(heat) {
+    return heat === 'hot' ? 'hot-score' : heat === 'warm' ? 'warm-score' : 'lukewarm-score';
+}
+
+function renderFitChips(fit) {
+    if (!fit || !fit.length) return '';
+    return fit.map(f => `<span class="fit-chip"><i class="${f.icon}"></i> ${f.label}</span>`).join('');
+}
+
+function renderSignalTags(tags) {
+    if (!tags || !tags.length) return '';
+    return tags.map(tag => {
+        let cls = 'signal-tag';
+        if (tag.includes('Risk') || tag.includes('Cancellation')) cls += ' alert';
+        if (tag.startsWith('Source:')) cls += ' source';
+        return `<span class="${cls}">${tag}</span>`;
+    }).join('');
+}
+
+function renderContactLinks(lead) {
+    let html = '';
+    if (lead.linkedin_url) html += `<a class="contact-link" href="${lead.linkedin_url}" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>`;
+    if (lead.tiktok_url)   html += `<a class="contact-link" href="${lead.tiktok_url}" target="_blank"><i class="fa-brands fa-tiktok"></i> TikTok</a>`;
+    if (lead.website_url)  html += `<a class="contact-link" href="${lead.website_url}" target="_blank"><i class="fa-solid fa-globe"></i> ${lead.company_url}</a>`;
+    return html;
+}
+
+function renderActionBtns(lead) {
+    const isContacted = lead.outreach_status === 'contacted';
+    return `<div class="action-btns">
+        <button class="action-btn ${isContacted ? 'contacted-btn' : ''}" onclick="toggleContacted('${lead.id}')">
+            <i class="fa-solid ${isContacted ? 'fa-rotate-left' : 'fa-check'}"></i>
+            ${isContacted ? 'Undo Contacted' : 'Mark Contacted'}
+        </button>
+        <button class="action-btn archive-btn" onclick="archiveLead('${lead.id}')">
+            <i class="fa-solid fa-box-archive"></i> Archive
+        </button>
+    </div>`;
+}
+
+// ============================================================
+// RENDER ALL
+// ============================================================
+function renderAll() {
+    updateStats();
+    renderLeadList();
+    renderHotProspects();
+    renderSignals();
+    renderIntel();
+    renderArchived();
+    updateSettings();
+}
+
+function activeLeads() {
+    return allLeads.filter(l => l.outreach_status !== 'archived');
+}
+
+function archivedLeads() {
+    return allLeads.filter(l => l.outreach_status === 'archived');
+}
+
+function renderArchived() {
+    const leads = archivedLeads();
+    const el = document.getElementById('archived-list');
+    if (!leads.length) {
+        el.innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--text-light);">
+            <i class="fa-solid fa-box-archive" style="font-size:2rem;margin-bottom:12px;display:block;"></i>
+            No archived leads yet.
+        </div>`;
+        return;
+    }
+    el.innerHTML = `<table class="lead-table">
+        <thead><tr>
+            <th>#</th><th>Company</th><th>Decision Maker</th><th>Industry</th><th>Score</th><th>Platform</th><th>Actions</th>
+        </tr></thead>
+        <tbody>${leads.map((lead, i) => `
+        <tr>
+            <td style="color:var(--text-light);font-size:0.75rem;font-weight:600;">${String(i+1).padStart(2,'0')}</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="company-avatar ${avatarClass(lead.heat_status)}">${lead.company_initials || lead.company_name.slice(0,2).toUpperCase()}</div>
+                    <div>
+                        <div style="font-weight:600;">${lead.company_name}</div>
+                        <div style="font-size:0.72rem;color:var(--text-light);">${lead.company_url || ''}</div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div style="font-weight:500;">${lead.decision_maker_name || '—'}</div>
+                <div style="font-size:0.72rem;color:var(--text-light);">${lead.decision_maker_title || ''}</div>
+            </td>
+            <td>${lead.industry || '—'}</td>
+            <td><div class="score-block"><span class="score-badge ${scoreClass(lead.score)}">${lead.score}</span></div></td>
+            <td>${lead.current_platform || '—'}</td>
+            <td>
+                <button class="action-btn" onclick="unarchiveLead('${lead.id}')">
+                    <i class="fa-solid fa-rotate-left"></i> Restore
+                </button>
+            </td>
+        </tr>`).join('')}
+        </tbody>
+    </table>`;
+}
+
+function updateStats() {
+    const leads   = activeLeads();
+    const hotCount      = leads.filter(l => l.heat_status === 'hot').length;
+    const warmCount     = leads.filter(l => l.heat_status === 'warm').length;
+    const lukewarmCount = leads.filter(l => l.heat_status === 'lukewarm').length;
+
+    document.getElementById('stat-total').textContent    = leads.length;
+    document.getElementById('stat-hot').textContent      = hotCount;
+    document.getElementById('stat-warm').textContent     = warmCount;
+    document.getElementById('stat-lukewarm').textContent = lukewarmCount;
+
+    document.getElementById('stat-signals').textContent  = leads.length;
+    document.getElementById('stat-verified').textContent = leads.length;
+    document.getElementById('stat-dm-access').textContent = `${leads.length}/${leads.length}`;
+
+    const now = new Date();
+    const period = now.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+    document.getElementById('leads-sub').textContent = `Ranked by purchase readiness · All signals verified ${period}`;
+}
+
+function updateSettings() {
+    const leads = activeLeads();
+    const hot   = leads.filter(l => l.heat_status === 'hot');
+    const warm  = leads.filter(l => l.heat_status === 'warm');
+    const avg   = leads.length ? (leads.reduce((s, l) => s + l.score, 0) / leads.length).toFixed(1) : '—';
+
+    document.getElementById('settings-total').textContent    = `${leads.length} qualified lead${leads.length !== 1 ? 's' : ''}`;
+    document.getElementById('settings-hot').textContent      = hot.length ? `${hot.length} (${hot.map(l => l.company_name).join(', ')})` : 'None';
+    document.getElementById('settings-warm').textContent     = warm.length ? `${warm.length} (${warm.map(l => l.company_name).join(', ')})` : 'None';
+    document.getElementById('settings-avg-score').textContent = `${avg} / 100`;
+}
+
+// ============================================================
+// RENDER: LEAD LIST
+// ============================================================
+function renderLeadList() {
+    const tbody = document.getElementById('leads-tbody');
+    let leads = activeLeads();
+
+    if (activeFilter !== 'all') {
+        leads = leads.filter(l => l.heat_status === activeFilter);
+    }
+
+    if (!leads.length) {
+        tbody.innerHTML = `<tr><td colspan="13" class="loading-cell">No leads found for this filter.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = leads.map((lead, i) => {
+        const isContacted = lead.outreach_status === 'contacted';
+        return `<tr class="${isContacted ? 'row-contacted' : ''}">
+            <td style="color:var(--text-light); font-size:0.75rem; font-weight:600;">${String(i+1).padStart(2,'0')}</td>
+            <td>
+                <div class="lead-name-block">
+                    <div class="lead-avatar ${avatarClass(lead.heat_status)}">${lead.company_initials}</div>
+                    <div>
+                        <div class="lead-name">${lead.company_name}</div>
+                        <div class="lead-url">${lead.company_url || ''}</div>
+                    </div>
+                </div>
+            </td>
+            <td><div class="dm-block"><div class="dm-name">${lead.decision_maker_name}</div><div class="dm-title">${lead.decision_maker_title}</div></div></td>
+            <td><span class="cell-text">${lead.industry}<br>${lead.industry_sub}</span></td>
+            <td>
+                <div class="score-block">
+                    <span class="score-num ${scoreClass(lead.heat_status)}">${lead.score}</span>
+                    <div class="score-bar-bg"><div class="score-bar-fill ${lead.heat_status}" style="width:${lead.score}%"></div></div>
+                </div>
+            </td>
+            <td>
+                <span class="status-badge ${isContacted ? 'contacted' : lead.heat_status}">
+                    ${isContacted ? 'Contacted' : lead.heat_status.charAt(0).toUpperCase() + lead.heat_status.slice(1)}
+                </span>
+            </td>
+            <td>
+                <div style="font-size:0.8rem;color:var(--text-mid);">${fmtDate(lead.signal_date)}</div>
+                <div style="font-size:0.68rem;color:var(--text-light);margin-top:2px;">Signal detected</div>
+            </td>
+            <td>
+                <div style="font-size:0.8rem;color:var(--text-mid);">${fmtDate(lead.date_added)}</div>
+                <div style="font-size:0.68rem;color:var(--text-light);margin-top:2px;">Added to report</div>
+            </td>
+            <td>
+                <span class="platform-tag">${lead.current_platform}</span>
+                ${lead.platform_alert ? `<div style="font-size:0.65rem;color:var(--${lead.heat_status});margin-top:3px;font-weight:600;">${lead.platform_alert}</div>` : ''}
+            </td>
+            <td><div class="signal-box">${lead.pain_point}</div></td>
+            <td><div class="fit-chips">${renderFitChips(lead.product_fit)}</div></td>
+            <td><div class="signal-box"><div class="angle-label">Opening</div>${lead.opening_angle}</div></td>
+            <td>
+                <div class="contact-links">${renderContactLinks(lead)}</div>
+                ${renderActionBtns(lead)}
+                ${isContacted && lead.contacted_at ? `<div style="font-size:0.65rem;color:var(--green);margin-top:6px;"><i class="fa-solid fa-check"></i> ${new Date(lead.contacted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>` : ''}
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+// ============================================================
+// RENDER: HOT PROSPECTS
+// ============================================================
+function renderHotProspects() {
+    const hot  = activeLeads().filter(l => l.heat_status === 'hot');
+    const warm = activeLeads().filter(l => l.heat_status === 'warm');
+
+    // Update banner
+    const avgScore = hot.length ? Math.round(hot.reduce((s,l) => s+l.score, 0) / hot.length) : 0;
+    document.getElementById('hot-banner-title').innerHTML = `<i class="fa-solid fa-fire-flame-curved" style="margin-right:8px;"></i>${hot.length} Hot Prospect${hot.length !== 1 ? 's' : ''} — Act This Week`;
+    document.getElementById('hot-banner-sub').textContent = hot.length
+        ? 'Both leads are in active cancellation or flight-risk status. Window is narrow.'
+        : 'No hot prospects at this time.';
+    document.getElementById('hot-banner-score').textContent = hot.length ? `Avg. Score: ${avgScore} / 100` : '';
+
+    document.getElementById('hot-cards-container').innerHTML = hot.length
+        ? hot.map(l => renderProspectCard(l, 'hot')).join('')
+        : '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-light);">No hot prospects right now.</div>';
+
+    // Warm section
+    const warmHeader = document.getElementById('warm-section-header');
+    const warmContainer = document.getElementById('warm-cards-container');
+    if (warm.length) {
+        warmHeader.style.display = 'flex';
+        warmContainer.innerHTML = warm.map(l => renderProspectCard(l, 'warm')).join('');
+    } else {
+        warmHeader.style.display = 'none';
+        warmContainer.innerHTML = '';
+    }
+}
+
+function renderProspectCard(lead, heat) {
+    const isContacted = lead.outreach_status === 'contacted';
+    return `<div class="prospect-card ${heat}-card ${isContacted ? 'contacted-card' : ''}">
+        <div class="pc-header">
+            <div class="pc-name-block">
+                <div class="pc-avatar ${avatarClass(lead.heat_status)}">${lead.company_initials}</div>
+                <div>
+                    <div class="pc-company">${lead.company_name}</div>
+                    <div class="pc-url">${lead.company_url}</div>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <div class="pc-score ${heat}">${lead.score}</div>
+                <div class="pc-score-label">Score</div>
+            </div>
+        </div>
+        <hr class="pc-divider">
+        <div class="pc-row"><div class="pc-label">Contact</div><div class="pc-value"><b>${lead.decision_maker_name}</b> — ${lead.decision_maker_title}</div></div>
+        <div class="pc-row"><div class="pc-label">Signal Date</div><div class="pc-value">${fmtDate(lead.signal_date)}</div></div>
+        <div class="pc-row"><div class="pc-label">Date Added</div><div class="pc-value">${fmtDate(lead.date_added)}</div></div>
+        <div class="pc-row"><div class="pc-label">Industry</div><div class="pc-value">${lead.industry} · ${lead.industry_sub}</div></div>
+        <div class="pc-row"><div class="pc-label">Platform</div><div class="pc-value"><b style="color:var(--${heat});">${lead.current_platform}${lead.platform_alert ? ' — ' + lead.platform_alert : ''}</b></div></div>
+        <div class="pc-row"><div class="pc-label">Pain</div><div class="pc-value">${lead.pain_point}</div></div>
+        <div class="pc-row"><div class="pc-label">Fit</div><div class="pc-value">${(lead.product_fit||[]).map(f => f.label).join(' · ')}</div></div>
+        <div class="pc-action">
+            <div class="pc-action-label">Opening Angle</div>
+            <div class="pc-action-text">"${lead.opening_angle}"</div>
+        </div>
+        <div class="pc-links">
+            ${lead.linkedin_url ? `<a class="pc-link-btn" href="${lead.linkedin_url}" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>` : ''}
+            ${lead.tiktok_url   ? `<a class="pc-link-btn" href="${lead.tiktok_url}" target="_blank"><i class="fa-brands fa-tiktok"></i> TikTok</a>` : ''}
+            ${lead.website_url  ? `<a class="pc-link-btn" href="${lead.website_url}" target="_blank"><i class="fa-solid fa-globe"></i> Website</a>` : ''}
+        </div>
+        <div class="pc-action-row">
+            <button class="action-btn ${isContacted ? 'contacted-btn' : ''}" style="flex:1;" onclick="toggleContacted('${lead.id}')">
+                <i class="fa-solid ${isContacted ? 'fa-rotate-left' : 'fa-check'}"></i>
+                ${isContacted ? 'Undo Contacted' : 'Mark Contacted'}
+            </button>
+            <button class="action-btn archive-btn" onclick="archiveLead('${lead.id}')">
+                <i class="fa-solid fa-box-archive"></i>
+            </button>
+        </div>
+        ${isContacted && lead.contacted_at ? `<div style="font-size:0.68rem;color:var(--green);margin-top:6px;text-align:center;"><i class="fa-solid fa-check-circle"></i> Contacted on ${new Date(lead.contacted_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>` : ''}
+    </div>`;
+}
+
+// ============================================================
+// RENDER: INTENT SIGNALS
+// ============================================================
+function renderSignals() {
+    const feed  = document.getElementById('signals-feed');
+    const leads = activeLeads();
+
+    if (!leads.length) {
+        feed.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">No signals to display.</div>';
+        return;
+    }
+
+    feed.innerHTML = leads.map(lead => `
+        <div class="signal-card ${lead.heat_status}-signal">
+            <div class="signal-indicator ${lead.heat_status}">
+                <i class="fa-solid ${lead.heat_status === 'hot' ? 'fa-fire-flame-curved' : 'fa-magnifying-glass'}"></i>
+            </div>
+            <div class="signal-body">
+                <div class="signal-company">${lead.company_name}</div>
+                <div class="signal-person">${lead.decision_maker_name} · ${lead.decision_maker_title} · ${lead.company_url}</div>
+                <div class="signal-quote">${lead.signal_quote || lead.pain_point}</div>
+                <div class="signal-tags">${renderSignalTags(lead.signal_tags)}</div>
+                <div style="margin-top:8px; font-size:0.7rem; color:var(--text-light);">
+                    <i class="fa-regular fa-calendar" style="margin-right:4px;"></i>Signal: ${fmtDate(lead.signal_date)} &nbsp;·&nbsp; Added: ${fmtDate(lead.date_added)}
+                </div>
+            </div>
+            <div class="signal-meta">
+                <div class="signal-score-big ${lead.heat_status}">${lead.score}</div>
+                <div class="signal-score-sub">Intent Score</div>
+                <div style="margin-top:10px;">
+                    <span class="status-badge ${lead.outreach_status === 'contacted' ? 'contacted' : lead.heat_status}">
+                        ${lead.outreach_status === 'contacted' ? 'Contacted' : lead.heat_status.charAt(0).toUpperCase() + lead.heat_status.slice(1)}
+                    </span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ============================================================
+// RENDER: COMPANY INTEL
+// ============================================================
+function renderIntel() {
+    const grid  = document.getElementById('intel-grid');
+    const leads = activeLeads();
+
+    if (!leads.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-light);">No companies to display.</div>';
+        return;
+    }
+
+    grid.innerHTML = leads.map(lead => `
+        <div class="intel-card">
+            <div class="intel-header">
+                <div class="intel-avatar ${avatarClass(lead.heat_status)}">${lead.company_initials}</div>
+                <div>
+                    <div class="intel-company-name">${lead.company_name}</div>
+                    <div class="intel-company-url">${lead.company_url}</div>
+                </div>
+            </div>
+            <div class="intel-field">
+                <div class="intel-field-label">Industry</div>
+                <div class="intel-field-value">${lead.industry} · ${lead.industry_sub}</div>
+            </div>
+            <div class="intel-field">
+                <div class="intel-field-label">Operations</div>
+                <div class="intel-field-value">${lead.company_operations || '—'}</div>
+            </div>
+            <div class="intel-field">
+                <div class="intel-field-label">Decision Maker</div>
+                <div class="intel-field-value"><b>${lead.decision_maker_name}</b>, ${lead.decision_maker_title}</div>
+            </div>
+            <div class="intel-field">
+                <div class="intel-field-label">Current Stack</div>
+                <div class="intel-field-value">${lead.current_platform}${lead.platform_alert ? ` — <b style="color:var(--${lead.heat_status});">${lead.platform_alert}</b>` : ''}</div>
+            </div>
+            <div class="intel-field">
+                <div class="intel-field-label">Key Products Needed</div>
+                <div class="intel-field-value">${(lead.product_fit||[]).map(f=>f.label).join(', ')}</div>
+            </div>
+            <div class="intel-status-row">
+                <span class="status-badge ${lead.outreach_status === 'contacted' ? 'contacted' : lead.heat_status}">
+                    ${lead.outreach_status === 'contacted' ? 'Contacted' : lead.heat_status.charAt(0).toUpperCase() + lead.heat_status.slice(1)} — Score ${lead.score}
+                </span>
+                ${lead.website_url ? `<a class="contact-link" href="${lead.website_url}" target="_blank" style="font-size:0.75rem;"><i class="fa-solid fa-globe"></i> Visit Site</a>` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+</script>
+
+</body>
+</html>
