@@ -403,7 +403,9 @@
         .mobile-nav { display: none; }
 
         @media (max-width: 768px) {
-            body { flex-direction: column; overflow: auto; height: auto; min-height: 100vh; }
+            html, body { overflow-x: hidden; max-width: 100vw; }
+            body { flex-direction: column; overflow-y: auto; height: auto; min-height: 100vh; }
+            * { max-width: 100%; box-sizing: border-box; }
 
             /* Hide desktop sidebar */
             .sidebar { display: none; }
@@ -1294,7 +1296,7 @@ async function loadOrderHistory() {
 // NAVIGATION
 // ============================================================
 const topbarCopy = {
-    leads:       { title: 'NetContenta - Lead Intelligence Report',    sub: 'Qualified prospects from competitive defection signals' },
+    leads:       { title: () => (CLIENT_NAME || 'Lead Intelligence') + ' - Lead Intelligence Report', sub: 'Qualified prospects from competitive defection signals' },
     hot:         { title: 'Hot Prospects',                             sub: 'Leads in active cancellation or flight-risk status' },
     signals:     { title: 'Intent Signals',                            sub: 'Verified frustration and buying signals' },
     intel:       { title: 'Company Intelligence',                      sub: 'Background profiles for all leads in pipeline' },
@@ -1313,10 +1315,11 @@ function switchView(view) {
     if (mobNav) mobNav.classList.add('active');
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + view).classList.add('active');
-    document.getElementById('topbar-title').textContent = topbarCopy[view].title;
+    const title = typeof topbarCopy[view].title === 'function' ? topbarCopy[view].title() : topbarCopy[view].title;
+    document.getElementById('topbar-title').textContent = title;
     document.getElementById('topbar-sub').textContent   = topbarCopy[view].sub;
     const mobTitle = document.getElementById('mob-view-title');
-    if (mobTitle) mobTitle.textContent = topbarCopy[view].title;
+    if (mobTitle) mobTitle.textContent = title;
     if (view === 'order') { loadPackages().then(renderOrderView); loadOrderHistory(); }
 }
 
