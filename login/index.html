@@ -457,6 +457,7 @@
             /* Lead table — horizontal scroll */
             .lead-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
             .lead-table { min-width: 700px; }
+            #mob-lead-list { display: none; }
 
             /* Prospect cards — single col */
             .prospect-cards { grid-template-columns: 1fr; }
@@ -481,8 +482,8 @@
             .mob-logout-wrap { display: block !important; }
 
             /* Mobile lead cards */
-            .lead-table-wrap { display: none; }
-            .mob-lead-list { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+            .lead-table-wrap { display: none !important; }
+            .mob-lead-list { display: flex !important; flex-direction: column; gap: 10px; padding: 4px 0; }
             .mob-lead-card {
                 background: var(--card); border: 1px solid var(--border);
                 border-radius: 12px; overflow: hidden; cursor: pointer;
