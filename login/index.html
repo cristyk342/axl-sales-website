@@ -396,6 +396,86 @@
         .view::-webkit-scrollbar { width: 5px; }
         .view::-webkit-scrollbar-track { background: transparent; }
         .view::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* ========== MOBILE ========== */
+        .mobile-topbar { display: none; }
+        .mobile-nav { display: none; }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; overflow: auto; height: auto; min-height: 100vh; }
+
+            /* Hide desktop sidebar */
+            .sidebar { display: none; }
+
+            /* Mobile top bar */
+            .mobile-topbar {
+                display: flex; align-items: center; justify-content: space-between;
+                background: var(--card); border-bottom: 1px solid var(--border);
+                padding: 14px 16px; position: sticky; top: 0; z-index: 100;
+                flex-shrink: 0;
+            }
+            .mobile-topbar .mob-logo { font-size: 1rem; font-weight: 800; color: var(--text); }
+            .mobile-topbar .mob-logo span { color: var(--primary); }
+            .mobile-topbar .mob-client { font-size: 0.72rem; color: var(--text-light); margin-top: 1px; }
+
+            /* Hide desktop topbar */
+            .topbar { display: none; }
+
+            /* Main fills screen */
+            .main { flex: 1; overflow: visible; }
+
+            /* Views */
+            .view { padding: 16px; overflow: visible; flex: none; }
+            .view.active { display: flex; }
+
+            /* Bottom nav */
+            .mobile-nav {
+                display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+                background: var(--card); border-top: 1px solid var(--border);
+                z-index: 200; padding: 6px 0 env(safe-area-inset-bottom, 6px);
+            }
+            .mob-nav-item {
+                flex: 1; display: flex; flex-direction: column; align-items: center;
+                gap: 3px; padding: 6px 4px; cursor: pointer; color: var(--text-light);
+                font-size: 0.58rem; font-weight: 600; text-transform: uppercase;
+                letter-spacing: 0.3px; transition: color 0.15s; border: none;
+                background: none; font-family: inherit;
+            }
+            .mob-nav-item i { font-size: 1.05rem; }
+            .mob-nav-item.active { color: var(--primary); }
+
+            /* Add padding at bottom so content isn't hidden behind nav */
+            .main { padding-bottom: 70px; }
+
+            /* Stat cards — 2 cols */
+            .stat-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .stat-card { padding: 12px 14px; }
+
+            /* Lead table — horizontal scroll */
+            .lead-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .lead-table { min-width: 700px; }
+
+            /* Prospect cards — single col */
+            .prospect-cards { grid-template-columns: 1fr; }
+
+            /* Company intel — single col */
+            .intel-grid { grid-template-columns: 1fr !important; }
+
+            /* Order grid — single col */
+            .order-grid { grid-template-columns: 1fr; }
+
+            /* Settings grid */
+            .settings-grid { grid-template-columns: 1fr !important; }
+
+            /* Section header */
+            .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+            /* Signal feed */
+            .signal-card { flex-direction: column; }
+
+            /* Topbar title on mobile via topbar-title el */
+            #mob-view-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+        }
     </style>
 </head>
 <body>
@@ -478,6 +558,26 @@
     </div>
 </aside>
 
+<!-- MOBILE TOP BAR -->
+<div class="mobile-topbar">
+    <div>
+        <div class="mob-logo">AXL<span> Sales</span></div>
+        <div class="mob-client" id="mob-view-title">Lead Intelligence</div>
+    </div>
+    <span class="confidential-badge"><i class="fa-solid fa-lock" style="margin-right:4px;"></i>Confidential</span>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav">
+    <button class="mob-nav-item active" data-view="leads" onclick="switchView('leads')"><i class="fa-solid fa-list"></i>Leads</button>
+    <button class="mob-nav-item" data-view="hot" onclick="switchView('hot')"><i class="fa-solid fa-fire"></i>Hot</button>
+    <button class="mob-nav-item" data-view="signals" onclick="switchView('signals')"><i class="fa-solid fa-bolt"></i>Signals</button>
+    <button class="mob-nav-item" data-view="intel" onclick="switchView('intel')"><i class="fa-solid fa-building"></i>Intel</button>
+    <button class="mob-nav-item" data-view="order" onclick="switchView('order')"><i class="fa-solid fa-rocket"></i>Order</button>
+    <button class="mob-nav-item" data-view="archived" onclick="switchView('archived')"><i class="fa-solid fa-box-archive"></i>Archive</button>
+    <button class="mob-nav-item" data-view="settings" onclick="switchView('settings')"><i class="fa-solid fa-gear"></i>Settings</button>
+</nav>
+
 <!-- MAIN CONTENT -->
 <main class="main">
     <div class="topbar">
@@ -541,6 +641,7 @@
         </div>
 
         <div class="table-card">
+            <div class="lead-table-wrap">
             <table class="lead-table">
                 <thead>
                     <tr>
@@ -563,6 +664,7 @@
                     <tr><td colspan="13" class="loading-cell"><i class="fa-solid fa-spinner fa-spin"></i> Loading leads...</td></tr>
                 </tbody>
             </table>
+            </div>
         </div>
 
         <div>
@@ -1203,11 +1305,17 @@ const topbarCopy = {
 
 function switchView(view) {
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.querySelector(`.nav-item[data-view="${view}"]`).classList.add('active');
+    const desktopNav = document.querySelector(`.nav-item[data-view="${view}"]`);
+    if (desktopNav) desktopNav.classList.add('active');
+    document.querySelectorAll('.mob-nav-item').forEach(n => n.classList.remove('active'));
+    const mobNav = document.querySelector(`.mob-nav-item[data-view="${view}"]`);
+    if (mobNav) mobNav.classList.add('active');
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('view-' + view).classList.add('active');
     document.getElementById('topbar-title').textContent = topbarCopy[view].title;
     document.getElementById('topbar-sub').textContent   = topbarCopy[view].sub;
+    const mobTitle = document.getElementById('mob-view-title');
+    if (mobTitle) mobTitle.textContent = topbarCopy[view].title;
     if (view === 'order') { loadPackages().then(renderOrderView); loadOrderHistory(); }
 }
 
