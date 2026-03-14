@@ -1141,6 +1141,7 @@ async function updateEmail() {
     const email = document.getElementById('new-email').value.trim();
     const msg   = document.getElementById('email-msg');
     if (!email) return;
+    await db.auth.refreshSession();
     const { error } = await db.auth.updateUser({ email });
     msg.style.display = 'block';
     if (error) {
@@ -1160,6 +1161,7 @@ async function updatePassword() {
     msg.style.display = 'block';
     if (!pw || pw.length < 6) { msg.style.color='var(--hot)'; msg.textContent='Password must be at least 6 characters.'; return; }
     if (pw !== pw2)            { msg.style.color='var(--hot)'; msg.textContent='Passwords do not match.'; return; }
+    await db.auth.refreshSession();
     const { error } = await db.auth.updateUser({ password: pw });
     if (error) {
         msg.style.color = 'var(--hot)';
