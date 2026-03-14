@@ -478,6 +478,7 @@
 
             /* Topbar title on mobile via topbar-title el */
             #mob-view-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+            .mob-logout-wrap { display: block !important; }
 
             /* Mobile lead cards */
             .lead-table-wrap { display: none; }
@@ -606,7 +607,6 @@
     <button class="mob-nav-item" data-view="order" onclick="switchView('order')"><i class="fa-solid fa-rocket"></i>Order</button>
     <button class="mob-nav-item" data-view="archived" onclick="switchView('archived')"><i class="fa-solid fa-box-archive"></i>Archive</button>
     <button class="mob-nav-item" data-view="settings" onclick="switchView('settings')"><i class="fa-solid fa-gear"></i>Settings</button>
-    <button class="mob-nav-item" onclick="doLogout()" style="color:var(--hot);"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</button>
 </nav>
 
 <!-- MAIN CONTENT -->
@@ -942,6 +942,13 @@
                 </div>
             </div>
 
+        </div>
+
+        <!-- Mobile-only logout -->
+        <div style="display:none;" class="mob-logout-wrap">
+            <button onclick="doLogout()" style="width:100%;margin-top:8px;padding:14px;border:none;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--hot);font-weight:700;font-size:0.9rem;cursor:pointer;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+            </button>
         </div>
 
     </div>
