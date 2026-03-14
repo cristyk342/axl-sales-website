@@ -1151,7 +1151,7 @@ async function updateEmail() {
         msg.textContent = error.message;
     } else {
         msg.style.color = 'var(--green)';
-        msg.textContent = 'Check your new email for a confirmation link.';
+        msg.textContent = 'Almost done! Check both your old and new email inboxes — you must click the confirmation link in each one for the change to take effect.';
         document.getElementById('new-email').value = '';
     }
 }
