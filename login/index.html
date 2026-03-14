@@ -944,6 +944,37 @@
 
         </div>
 
+        <!-- Account Settings -->
+        <div style="margin-top:24px;">
+            <div class="section-title" style="margin-bottom:16px;">Account Settings</div>
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <div class="settings-card-title"><i class="fa-solid fa-envelope"></i> Change Email</div>
+                    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+                        <input id="new-email" type="email" placeholder="New email address"
+                            style="padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:0.85rem;outline:none;">
+                        <button onclick="updateEmail()" style="padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;">
+                            Update Email
+                        </button>
+                        <div id="email-msg" style="font-size:0.75rem;display:none;"></div>
+                    </div>
+                </div>
+                <div class="settings-card">
+                    <div class="settings-card-title"><i class="fa-solid fa-lock"></i> Change Password</div>
+                    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+                        <input id="new-password" type="password" placeholder="New password"
+                            style="padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:0.85rem;outline:none;">
+                        <input id="confirm-password" type="password" placeholder="Confirm new password"
+                            style="padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:0.85rem;outline:none;">
+                        <button onclick="updatePassword()" style="padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;">
+                            Update Password
+                        </button>
+                        <div id="password-msg" style="font-size:0.75rem;display:none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Mobile-only logout -->
         <div style="display:none;" class="mob-logout-wrap">
             <button onclick="doLogout()" style="width:100%;margin-top:8px;padding:14px;border:none;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--hot);font-weight:700;font-size:0.9rem;cursor:pointer;">
@@ -1102,6 +1133,41 @@ async function doLogin() {
         hideLogin();
         await loadLeads();
         subscribeToLeads();
+    }
+}
+
+async function updateEmail() {
+    const email = document.getElementById('new-email').value.trim();
+    const msg   = document.getElementById('email-msg');
+    if (!email) return;
+    const { error } = await db.auth.updateUser({ email });
+    msg.style.display = 'block';
+    if (error) {
+        msg.style.color = 'var(--hot)';
+        msg.textContent = error.message;
+    } else {
+        msg.style.color = 'var(--green)';
+        msg.textContent = 'Check your new email for a confirmation link.';
+        document.getElementById('new-email').value = '';
+    }
+}
+
+async function updatePassword() {
+    const pw  = document.getElementById('new-password').value;
+    const pw2 = document.getElementById('confirm-password').value;
+    const msg = document.getElementById('password-msg');
+    msg.style.display = 'block';
+    if (!pw || pw.length < 6) { msg.style.color='var(--hot)'; msg.textContent='Password must be at least 6 characters.'; return; }
+    if (pw !== pw2)            { msg.style.color='var(--hot)'; msg.textContent='Passwords do not match.'; return; }
+    const { error } = await db.auth.updateUser({ password: pw });
+    if (error) {
+        msg.style.color = 'var(--hot)';
+        msg.textContent = error.message;
+    } else {
+        msg.style.color = 'var(--green)';
+        msg.textContent = 'Password updated successfully.';
+        document.getElementById('new-password').value = '';
+        document.getElementById('confirm-password').value = '';
     }
 }
 
