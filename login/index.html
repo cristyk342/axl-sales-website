@@ -1071,6 +1071,7 @@ function applyClientIdentity(user) {
         applyClientIdentity(session.user);
         hideLogin();
         await loadLeads();
+        subscribeToLeads();
     }
 })();
 
@@ -1100,6 +1101,7 @@ async function doLogin() {
         applyClientIdentity(user);
         hideLogin();
         await loadLeads();
+        subscribeToLeads();
     }
 }
 
@@ -1132,6 +1134,12 @@ async function loadLeads() {
 
     allLeads = data;
     renderAll();
+}
+
+function subscribeToLeads() {
+    db.channel('leads-changes')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'leads', filter: `client_id=eq.${CLIENT_ID}` }, () => loadLeads())
+        .subscribe();
 }
 
 async function toggleContacted(id) {
