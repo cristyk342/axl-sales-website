@@ -997,7 +997,7 @@ function applyClientIdentity(user) {
     CLIENT_ID   = user.app_metadata?.client_id   || user.email.split('@')[0];
     CLIENT_NAME = user.app_metadata?.client_name || CLIENT_ID.charAt(0).toUpperCase() + CLIENT_ID.slice(1);
     document.getElementById('settings-client-name').textContent = CLIENT_NAME;
-    document.getElementById('topbar-title').textContent = CLIENT_NAME + ' - Lead Intelligence Report';
+    document.getElementById('topbar-title').textContent = 'Welcome, ' + CLIENT_NAME;
 }
 
 // ============================================================
@@ -1296,7 +1296,7 @@ async function loadOrderHistory() {
 // NAVIGATION
 // ============================================================
 const topbarCopy = {
-    leads:       { title: () => (CLIENT_NAME || 'Lead Intelligence') + ' - Lead Intelligence Report', sub: 'Qualified prospects from competitive defection signals' },
+    leads:       { title: () => 'Welcome, ' + (CLIENT_NAME || 'Client'), sub: 'Qualified prospects from competitive defection signals' },
     hot:         { title: 'Hot Prospects',                             sub: 'Leads in active cancellation or flight-risk status' },
     signals:     { title: 'Intent Signals',                            sub: 'Verified frustration and buying signals' },
     intel:       { title: 'Company Intelligence',                      sub: 'Background profiles for all leads in pipeline' },
