@@ -478,6 +478,33 @@
 
             /* Topbar title on mobile via topbar-title el */
             #mob-view-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+
+            /* Mobile lead cards */
+            .lead-table-wrap { display: none; }
+            .mob-lead-list { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+            .mob-lead-card {
+                background: var(--card); border: 1px solid var(--border);
+                border-radius: 12px; overflow: hidden; cursor: pointer;
+            }
+            .mob-lead-card-header {
+                display: flex; align-items: center; gap: 12px;
+                padding: 14px 16px;
+            }
+            .mob-lead-card-header .lead-avatar { flex-shrink: 0; }
+            .mob-lead-card-info { flex: 1; min-width: 0; }
+            .mob-lead-card-info .lead-name { font-weight: 700; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .mob-lead-card-info .lead-url  { font-size: 0.72rem; color: var(--text-light); }
+            .mob-lead-card-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+            .mob-lead-card-chevron { color: var(--text-light); font-size: 0.85rem; margin-left: 6px; transition: transform 0.2s; }
+            .mob-lead-card.open .mob-lead-card-chevron { transform: rotate(90deg); }
+            .mob-lead-card-body {
+                display: none; padding: 0 16px 16px; border-top: 1px solid var(--border);
+            }
+            .mob-lead-card.open .mob-lead-card-body { display: block; }
+            .mob-detail-row { display: flex; flex-direction: column; gap: 3px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+            .mob-detail-row:last-child { border-bottom: none; }
+            .mob-detail-label { font-size: 0.68rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+            .mob-detail-value { font-size: 0.82rem; color: var(--text); line-height: 1.4; }
         }
     </style>
 </head>
@@ -642,6 +669,8 @@
                 <span class="pill" data-filter="lukewarm">Lukewarm</span>
             </div>
         </div>
+
+        <div id="mob-lead-list" class="mob-lead-list"></div>
 
         <div class="table-card">
             <div class="lead-table-wrap">
@@ -1495,6 +1524,60 @@ function renderLeadList() {
     if (!leads.length) {
         tbody.innerHTML = `<tr><td colspan="13" class="loading-cell">No leads found for this filter.</td></tr>`;
         return;
+    }
+
+    // Mobile cards
+    const mobList = document.getElementById('mob-lead-list');
+    if (mobList) {
+        mobList.innerHTML = leads.map((lead) => {
+            const isContacted = lead.outreach_status === 'contacted';
+            return `<div class="mob-lead-card" onclick="this.classList.toggle('open')">
+                <div class="mob-lead-card-header">
+                    <div class="lead-avatar ${avatarClass(lead.heat_status)}">${lead.company_initials || lead.company_name.slice(0,2).toUpperCase()}</div>
+                    <div class="mob-lead-card-info">
+                        <div class="lead-name">${lead.company_name}</div>
+                        <div class="lead-url">${lead.decision_maker_name || ''}${lead.decision_maker_title ? ' · ' + lead.decision_maker_title : ''}</div>
+                    </div>
+                    <div class="mob-lead-card-badges">
+                        <span class="score-badge ${scoreClass(lead.score)}">${lead.score}</span>
+                        <span class="status-badge ${isContacted ? 'contacted' : lead.heat_status}" style="font-size:0.65rem;padding:2px 7px;">
+                            ${isContacted ? 'Contacted' : lead.heat_status.charAt(0).toUpperCase() + lead.heat_status.slice(1)}
+                        </span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right mob-lead-card-chevron"></i>
+                </div>
+                <div class="mob-lead-card-body">
+                    <div class="mob-detail-row">
+                        <div class="mob-detail-label">Platform</div>
+                        <div class="mob-detail-value">${lead.current_platform || '—'}${lead.platform_alert ? ' · ' + lead.platform_alert : ''}</div>
+                    </div>
+                    <div class="mob-detail-row">
+                        <div class="mob-detail-label">Industry</div>
+                        <div class="mob-detail-value">${lead.industry || '—'}${lead.industry_sub ? ' · ' + lead.industry_sub : ''}</div>
+                    </div>
+                    <div class="mob-detail-row">
+                        <div class="mob-detail-label">Pain Point</div>
+                        <div class="mob-detail-value">${lead.pain_point || '—'}</div>
+                    </div>
+                    <div class="mob-detail-row">
+                        <div class="mob-detail-label">Opening Angle</div>
+                        <div class="mob-detail-value">${lead.opening_angle || '—'}</div>
+                    </div>
+                    <div class="mob-detail-row">
+                        <div class="mob-detail-label">Product Fit</div>
+                        <div class="mob-detail-value"><div class="fit-chips">${renderFitChips(lead.product_fit)}</div></div>
+                    </div>
+                    <div class="mob-detail-row">
+                        <div class="mob-detail-label">Signal Date</div>
+                        <div class="mob-detail-value">${fmtDate(lead.signal_date)}</div>
+                    </div>
+                    <div class="mob-detail-row" style="border-bottom:none;padding-top:12px;">
+                        <div class="contact-links" style="margin-bottom:8px;">${renderContactLinks(lead)}</div>
+                        ${renderActionBtns(lead)}
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
     }
 
     tbody.innerHTML = leads.map((lead, i) => {
